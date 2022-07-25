@@ -1,5 +1,10 @@
 Package: PBAmCCd
 Type: Package
 Title: Proportionality Based Association Measures for Count Compositional Data
+Author: Kevin McGregor, Nneka Okaeme
+Maintainer: Kevin McGregor <kevinmcg@yorku.ca>
+Description: Package corresponding to the paper "Proportionality Based Association 
+  Measures for Count Compositional Data".
+License: Artistic-2.0
 Version: 0.0.1.0
 RoxygenNote: 7.2.1
