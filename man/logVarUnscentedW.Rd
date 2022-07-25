@@ -11,8 +11,8 @@ logVarUnscentedW(mu, Sigma, transf = c("alr", "clr"))
 
 \item{Sigma}{The sigma matrix of the underlying distribution}
 
-\item{transf}{The desired transformation. If \code(transf="alr") the inverse 
-additive logratio transformation is applied. If \code(transf="clr") the
+\item{transf}{The desired transformation. If \code{transf="alr"} the inverse 
+additive logratio transformation is applied. If \code{transf="clr"} the
 inverse centered logratio transformation is applied.}
 }
 \value{
