@@ -328,8 +328,8 @@ g <- function(x) {
 #'
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive log-ratio transformation is applied. If \cpde(transf="clr") the
+#' @param transf The desired transformation. If \code{transf="alr"} the inverse 
+#' additive log-ratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered log-ratio transformation is applied. 
 #' @param order The desired order of the Taylor Series approximation
 #'
@@ -392,8 +392,8 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #'
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive logratio transformation is applied. If \code(transf="clr") the
+#' @param transf The desired transformation. If \code{transf="alr"} the inverse 
+#' additive logratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered logratio transformation is applied. 
 #' @param order The desired order of the Taylor Series approximation
 #'
@@ -434,8 +434,8 @@ logVarTaylorFull <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first",
 #' 
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive log-ratio transformation is applied. If \code(transf="clr") the
+#' @param transf The desired transformation. If \code{transf="alr"} the inverse 
+#' additive log-ratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered log-ratio transformation is applied. 
 #' @param alpha Parameter which controls the spread of the Sigma points
 #' @param beta Parameter which compensates for the distribution
@@ -506,8 +506,8 @@ logVarUnscented <- function(mu, Sigma, transf=c("alr", "clr"), alpha=1e-3, beta=
 #' 
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive logratio transformation is applied. If \code(transf="clr") the
+#' @param transf The desired transformation. If \code{transf="alr"} the inverse 
+#' additive logratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered logratio transformation is applied. 
 #'
 #' @return The estimated variance-covariance matrix, logx.
