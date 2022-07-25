@@ -26,7 +26,7 @@ varEst <- function(counts, p.model=c("logitNormal", "dirichlet", "plugin"), type
   }
   
   if (p.model=="logitNormal") {
-    result <- logitNormalVariation(mu, Sigma, lmu, lsigma, type=type)
+    result <- logitNormalVariation(mu, Sigma, type=type)
   } else if (p.model=="dirichlet") {
     result <- dirichletVariation(counts)
   } else {
