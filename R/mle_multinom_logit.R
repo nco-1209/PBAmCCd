@@ -1,10 +1,10 @@
 #' Maximum Likelihood Estimate
 #' 
-#' Function which returns maximum likelihood estimates of parameters given a compositional
-#' dataset. The MLE procedure is based on the Multinomial Logit-Normal distribution, 
+#' Returns the maximum likelihood estimates of parameters given a compositional
+#' dataset. The MLE procedure is based on the multinomial logit-Normal distribution, 
 #' using the EM algorithm from Hoff (2003).
 #'
-#' @param y Compositional dataset
+#' @param y Count compositional dataset
 #' @param max.iter Maximum number of iterations 
 #' @param max.iter.nr Maximum number of Newton-Raphson iterations
 #' @param tol Stopping rule
@@ -124,7 +124,6 @@ mleLR <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, lam
 #'
 #' @examples
 #' 
-#' @export
 #' 
 wrapMLE <- function(x) {
   do.call(mleLR, x)
@@ -133,10 +132,11 @@ wrapMLE <- function(x) {
 
 #' Maximum Likelihood Estimator Paths
 #' 
-#' Calculates the maximum likelihood estimates of the parameters for various 'paths'
+#' Calculates the maximum likelihood estimates of the parameters for the 
+#' mutlinomial logit-Normal distribution under various values
 #' of the penalization parameter \code{lambda}.
 #'
-#' @param y Compositional dataset
+#' @param y Count compositional dataset
 #' @param max.iter Maximum number of iterations
 #' @param max.iter.nr Maximum number of Newton-Raphson iterations
 #' @param tol Stopping rule
@@ -148,7 +148,7 @@ wrapMLE <- function(x) {
 #' @param n.cores Number of cores to use for parallel computation
 #' @param gamma Gamma value for EBIC calculation of the log-likelihood
 #'
-#' @return The MLE estimates of y for each element lambda of lambda.gl, (\code{est}); 
+#' @return The MLE estimates of \code{y} for each element lambda of lambda.gl, (\code{est}); 
 #' the value of the estimates which produce the minimum EBIC, (\code{est.min}); 
 #' the vector of lambdas used for graphical lasso, (\code{lambda.gl}); the index of 
 #' the minimum EBIC (extended Bayesian information criterion), (\code{min.idx}); 
@@ -200,16 +200,15 @@ mlePath <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, l
 #' Calculates the gradient of the normal random variables, on the logit scale.
 #'
 #' @param v Additive-log ratio (alr) transform of y
-#' @param y Compositional data set
-#' @param ni Row sums of y?
+#' @param y Count compositional data set
+#' @param ni Row sums of y
 #' @param mu Mu vector of y
 #' @param Sigma.inv Sigma inverse matrix of y
 #'
-#' @return The gradient vector of Normal random variables
+#' @return The gradient vector of Normal random variables.
 #'
 #' @examples
 #' 
-#' @export
 #' 
 grad <- function(v, y, ni, mu, Sigma.inv) {
   ev <- exp(v)
@@ -220,15 +219,14 @@ grad <- function(v, y, ni, mu, Sigma.inv) {
 #' 
 #' Calculates the hessian matrix.
 #'
-#' @param v Compositional dataset which has been transformed by the additive log ratio
-#' @param ni Row sums of the raw data ?
+#' @param v Count compositional dataset which has been transformed by the additive log ratio
+#' @param ni Row sums of the raw data 
 #' @param Sigma.inv Inverse of the Sigma matrix
 #'
 #' @return The hessian matrix.
 #'
 #' @examples
 #' 
-#' @export 
 #' 
 hess <- function(v, ni, Sigma.inv) {
   ev <- exp(v)
@@ -239,18 +237,17 @@ hess <- function(v, ni, Sigma.inv) {
 
 #' Gaussian Log-Likelihood
 #' 
-#' Calculates the Gaussian log-likelihood.
+#' Calculates the Gaussian log-likelihood,  under the multinomial logit-Normal model.
 #'
-#' @param v Compositional data set which has been transformed by the additive 
+#' @param v Count compositional dataset which has been transformed by the additive-
 #' log ratio
-#' @param S ?
+#' @param S Covariance of \code{v}
 #' @param invSigma Inverse of the Sigma matrix
 #'
 #' @return The estimated Gaussian log-likelihood under the Multinomial Logit-Normal distribution.
 #' 
 #' @examples
 #' 
-#' @export
 #'
 logLikG <- function(v, S, invSigma) {
   n <- NROW(v)
@@ -260,19 +257,18 @@ logLikG <- function(v, S, invSigma) {
 
 #' Log-Likelihood
 #' 
-#' Calculates the log-likelihood.
+#' Calculates the log-likelihood, under the multinomial logit-Normal model.
 #'
 #' @param v The additive log ratio transform of y
 #' @param y Compositional data set
-#' @param ni The row sums of y?
-#' @param S ?
+#' @param ni The row sums of y
+#' @param S Covariance of \code{v}
 #' @param invSigma The inverse of the Sigma matrix
 #'
 #' @return The estimated log-likelihood under the Multinomial Logit-Normal distribution.
 #'
 #' @examples
-#' 
-#' @export
+#'
 #'
 logLik <- function(v, y, ni, S, invSigma) {
   n.sp <- NCOL(y)
@@ -284,16 +280,16 @@ logLik <- function(v, y, ni, S, invSigma) {
 
 #' Extended Bayesian Information Criterion
 #' 
-#' Calculates the Extende
-#' d Bayesian Information Criterion (EBIC) of a model.
+#' Calculates the Extended Bayesian Information Criterion (EBIC) of a model.
 #' Used for model selection.
 #'
 #' @param l Log-likelihood estimates of the model
 #' @param n Number of rows of the data set for which the log-likelihood has been 
 #' calculated
-#' @param d ?
+#' @param d The size of the \code{(k-1) \times (k-1)} covariance matrix of a 
+#' \code{k \times k} count-compositional data matrix
 #' @param df Degrees of freedom 
-#' @param gamma ?
+#' @param gamma A tuning parameter. Larger values means more penalization
 #'
 #' @return The value of the EBIC.
 #' 
@@ -313,7 +309,7 @@ ebic <- function(l, n, d, df, gamma) {
 #' @param fit The model fit 
 #' @param xlog TRUE or FALSE. Renders plot with the x-axis in the log-scale if TRUE
 #'
-#' @return Plot of the EBIC (y-axis) at each lambda (x-axis).
+#' @return Plot of the EBIC (y-axis) against each lambda (x-axis).
 #'
 #' @examples
 #'

@@ -1,0 +1,87 @@
+* using log directory 'C:/Users/nokae/Documents/Research Position/PBAmCCd/PBAmCCd.Rcheck'
+* using R version 4.2.1 (2022-06-23 ucrt)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: UTF-8
+* checking for file 'PBAmCCd/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'PBAmCCd' version '0.0.1.0'
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for .dll and .exe files ... OK
+* checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .RData
+  .Rhistory
+  .gitignore
+  R/.Rhistory
+  .Rd2pdf13936
+  .Rproj.user
+  .git
+These were most likely included in error. See section 'Package
+structure' in the 'Writing R Extensions' manual.
+* checking for portable file names ... OK
+* checking whether package 'PBAmCCd' can be installed ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Checking should be performed on sources prepared by 'R CMD build'.
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... WARNING
+Found the following directory with the name of a check directory:
+  ./PBAmCCd.Rcheck
+Most likely, these were included erroneously.
+Found the following directory with the name of a Rd2pdf directory:
+  ./.Rd2pdf13936
+Most likely, these were included erroneously.
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... WARNING
+'::' or ':::' imports not declared from:
+  'compositions' 'glasso' 'mvtnorm'
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+MCVariation: no visible global function definition for 'var'
+MCVariation: no visible global function definition for 'cov'
+logLik: no visible binding for global variable 'n'
+logVarMC: no visible global function definition for 'cov'
+logVarUnscented: no visible global function definition for 'cov'
+mleLR: no visible global function definition for 'cov'
+mlePath: no visible global function definition for 'cov'
+naiveVariation: no visible global function definition for 'var'
+naiveVariation: no visible global function definition for 'cov'
+varEst: no visible binding for global variable 'J'
+varEst: no visible binding for global variable 'mu'
+varEst: no visible binding for global variable 'Sigma'
+Undefined global functions or variables:
+  J Sigma cov mu n var
+Consider adding
+  importFrom("stats", "cov", "var")
+to your NAMESPACE file.
+* checking Rd files ... NOTE
+prepare_Rd: mleLR.Rd:32-34: Dropping empty section \value
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... OK
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+* checking PDF version of manual without index ... ERROR
+Re-running with no redirection of stdout/stderr.
+* DONE
+Status: 1 ERROR, 3 WARNINGs, 4 NOTEs

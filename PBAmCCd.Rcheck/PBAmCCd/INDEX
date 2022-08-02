@@ -1,0 +1,27 @@
+MCSample                Monte Carlo Sample
+MCVariation             Monte Carlo Variation
+dirichletVariation      Dirichlet Variation
+ebic                    Extended Bayesian Information Criterion
+ebicPlot                Extended Bayesian Information Criterion Plot
+g                       Log of the Inverse Additive Log-ratio
+grad                    Gradient of Normal Random Variables
+hess                    Hessian
+logLik                  Log-Likelihood
+logLikG                 Gaussian Log-Likelihood
+logVarMC                Monte Carlo Logx Variance-Covariance
+logVarTaylor            Logx Variance-Covariance
+logVarTaylorFull        Full Logx Variance-Covariance
+logVarUnscented         Unscented Logx Variance-Covariance
+logVarUnscentedW        Unscented Logx Variance-Covariance ???What is W
+                        for?
+logitNormalVariation    Logit Normal Variation
+logitNormalVariationOLD
+                        Logit Normal Variation (Old Version)
+mleLR                   Maximum Likelihood Estimate
+mlePath                 Maximum Likelihood Estimator Paths
+naiveVariation          Naive Variation
+pluginVariation         Plugin Variation
+rmse                    Root Mean Square Error
+rmse_by_row             Row Root Mean Square Error
+varEst                  Estimated Variation Matrix
+wrapMLE                 Wrapper for MleLR()

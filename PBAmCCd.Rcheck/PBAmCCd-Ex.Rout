@@ -1,0 +1,114 @@
+
+R version 4.2.1 (2022-06-23 ucrt) -- "Funny-Looking Kid"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "PBAmCCd"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('PBAmCCd')
+
+Attaching package: 'PBAmCCd'
+
+The following object is masked from 'package:stats':
+
+    logLik
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("g")
+> ### * g
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: g
+> ### Title: Log of the Inverse Additive Log-ratio
+> ### Aliases: g
+> 
+> ### ** Examples
+> 
+> vec <- sample(1:250, 9)
+> ref <- vec[length(vec)]
+> alr.vec <- log(vec[-length(vec)]/ref)
+> 
+> g(alr.vec)
+[1] -1.619030 -2.916976 -2.018489 -2.276671 -2.048887 -1.765845 -3.375283
+[8] -4.497426 -1.789376
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rmse")
+> ### * rmse
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rmse
+> ### Title: Root Mean Square Error
+> ### Aliases: rmse
+> 
+> ### ** Examples
+> 
+> x <- sample(1:20, size = 4)
+> y <- sample(1:20, size = 4)
+> 
+> rmse(x,y)
+[1] 9.848858
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rmse_by_row")
+> ### * rmse_by_row
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rmse_by_row
+> ### Title: Row Root Mean Square Error
+> ### Aliases: rmse_by_row
+> 
+> ### ** Examples
+> 
+> x <- matrix(sample(1:500, size = 21), nrow=3)
+> y <- matrix(sample(1:500, size = 21), nrow=3)
+> 
+> rmse(x,y)
+[1] 160.642
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.06 0 0.07 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

@@ -2,7 +2,7 @@
 #' 
 #' Estimates the variation matrix of compositional count data.
 #'
-#' @param counts Dataset of compositional data
+#' @param counts count compositional dataset
 #' @param p.model Probability model for the counts: (\code{logitNormal}, \code{dirichlet},
 #' or \code{plugin}) 
 #' @param type Type of variation metric to be calculated: \code{standard}, 
@@ -26,7 +26,7 @@ varEst <- function(counts, p.model=c("logitNormal", "dirichlet", "plugin"), type
   }
   
   if (p.model=="logitNormal") {
-    result <- logitNormalVariation(mu, Sigma, lmu, lsigma, type=type)
+    result <- logitNormalVariation(mu, Sigma, type=type)
   } else if (p.model=="dirichlet") {
     result <- dirichletVariation(counts)
   } else {
@@ -39,8 +39,9 @@ varEst <- function(counts, p.model=c("logitNormal", "dirichlet", "plugin"), type
 
 #' Logit Normal Variation
 #' 
-#' Estimates the empirical variation matrix of count data that follows a multinomial
-#' logit-Normal distribution.
+#' Estimates the empirical metrics of association of count compositional data 
+#' which follows a multinomial logit-Normal distribution. Estimate is performed using 
+#' only the parameters of the distribution. 
 #'
 #' @param mu The mle estimate of the mu matrix 
 #' @param Sigma The mle estimate of the sigma matrix
@@ -83,85 +84,10 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
   return(V)
 }
 
-#' Logit Normal Variation (Old Version)
-#' 
-#' Estimates the empirical variation matrix of count data that follows a multinomial 
-#' logit-Normal distribution. Differs from the function \code{logitNormalVariation()}
-#' in that this function does not use a Taylor-series approximation.
-#'
-#' @param mu ?
-#' @param Sigma ?
-#' @param lmu ?
-#' @param lsigma ? 
-#' @param type Type of variation metric to be calculated: \code{standard}, \code{phi},
-#' or \code{rho}
-#'
-#' @return An estimation of the variation matrix, \code{V}.
-#' 
-#' @examples
-#' 
-#' @export
-#'
-logitNormalVariationOLD <- function(mu, Sigma, lmu, lsigma, type=c("standard","phi","rho")) {
-  type <- match.arg(type)
-  J <- length(mu)
-  
-  d.S <- diag(Sigma)
-  ones <- rep(1, J)
-  
-  tcp.dS <- tcrossprod(d.S, ones)
-  Elr <- tcp.dS + t(tcp.dS) - 2*Sigma
-  En <- exp(-lmu+lsigma^2/2)
-  
-  tcp.e.mu.dS <- tcrossprod(exp(-mu+d.S/2), ones)
-  sum.rows <- rowSums(tcp.e.mu.dS+tcp.dS/2-Sigma)
-  
-  Ep <- tcp.e.mu.dS*(1+tcrossprod(sum.rows, ones))
-  
-  V <- Elr + En*(2+Ep+t(Ep))
-  diag(V) <- 0
-  return(V)
-}
-
-#' Dirichlet Variation
-#' 
-#' Estimates the variation matrix for empirical compositional data which is based
-#' on the Dirichlet distribution. 
-#'
-#' @param counts Dataset of compositional data
-#'
-#' @return \code{NULL}
-#' 
-#' @examples
-#' 
-#' @export
-#'
-dirichletVariation <- function(counts) {
-  return(NULL)
-}
-
-
-
-#' Plugin Variation
-#' 
-#' Estimates the variation matrix for empirical compositional data, ?plugin.
-#'
-#' @param counts Dataset of compositional data
-#'
-#' @return \code{NULL}
-#' 
-#' @examples
-#' 
-#' @export
-#'
-pluginVariation <- function(counts) {
-  return(NULL)
-}
-
-
 #' Naive Variation
 #' 
-#' Estimates the variation matrix of compositional data based strictly on the counts. 
+#' Estimates the variation matrix of counte compositional data using strictly the 
+#' dataset.
 #'
 #' @param counts Dataset of compositional data
 #' @param pseudo.count Scaler value added to the data matrix to prevent infinite 
@@ -243,7 +169,8 @@ MCSample <- function(mu, Sigma, K=1) {
 
 #' Monte Carlo Variation
 #' 
-#' Calculates the variation matrix using Monte Carlo integration.
+#' Estimates the "true" values of the metrics of association for count compositional 
+#' data, using large-sample Monte-Carlo methods.  
 #'
 #' @param mu The mean matrix of the underlying distribution 
 #' @param Sigma The variance matrix of the underlying distribution 
@@ -313,7 +240,6 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
 #' 
 #' g(alr.vec)
 #' 
-#' @export
 #'
 g <- function(x) {
   ls <- log(1+sum(exp(x)))
@@ -323,13 +249,13 @@ g <- function(x) {
 
 #' Logx Variance-Covariance
 #' 
-#' Function which estimates the variance-covariance of the log of the data, using a 
-#' Taylor-series approximation. 
+#' Function which estimates the variance-covariance of the log of a count 
+#' compositional dataset, using a Taylor-series approximation. 
 #'
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive log-ratio transformation is applied. If \cpde(transf="clr") the
+#' @param transf The desired transformation. If \code{transf="alr"} the inverse 
+#' additive log-ratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered log-ratio transformation is applied. 
 #' @param order The desired order of the Taylor Series approximation
 #'
@@ -392,8 +318,8 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #'
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive logratio transformation is applied. If \code(transf="clr") the
+#' @param transf The desired transformation. If \code{transf="alr"} the inverse 
+#' additive logratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered logratio transformation is applied. 
 #' @param order The desired order of the Taylor Series approximation
 #'
@@ -427,129 +353,3 @@ logVarTaylorFull <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first",
   M%*%tcrossprod(Sigma, M) + 0.5*t2
 }
 
-#' Unscented Logx Variance-Covariance  
-#'
-#' Function which estimates the variance-covariance of the log of the data, using an 
-#' unscented transformation. 
-#' 
-#' @param mu The mean vector of the underlying distribution
-#' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive log-ratio transformation is applied. If \code(transf="clr") the
-#' inverse centered log-ratio transformation is applied. 
-#' @param alpha Parameter which controls the spread of the Sigma points
-#' @param beta Parameter which compensates for the distribution
-#' @param kappa Scaling Parameter
-#' 
-#' @return The estimated variance-covariance matrix, logx.
-#' 
-#' @references 
-#' Extended and Unscented Kalman Filter Algorithms for Online State Estimation. 
-#' (2022). MathWorks. https://www.bibliography.com/apa/apa-reference-page-examples-and-format-guide/
-#' 
-#' Hendeby, G., & Gustafsson, F. On Nonlinear Transformations Of Gaussian Distributions. 
-#' https://users.isy.liu.se/en/rt/fredrik/reports/07SSPut.pdf
-#' 
-#' @examples
-#' 
-#' @export
-#'
-logVarUnscented <- function(mu, Sigma, transf=c("alr", "clr"), alpha=1e-3, beta=2, kappa=0) {
-  transf <- match.arg(transf)
-  
-  D <- length(mu)
-  lambda <- alpha^2*(D+kappa)-D
-  
-  ones <- rep(1, 2*D+1)
-  ones.short <- rep(1, D)
-  
-  # svd.Sigma <- svd(Sigma)
-  # v <- svd.Sigma$v # This is the transpose of u from Hendeby/Gustafsson paper
-  # s <- svd.Sigma$d
-  #eig <- eigen(Sigma+D+lambda)
-  #eig <- eigen(Sigma+D)
-  #sqrt.Sigma <- eig$vectors%*%tcrossprod(diag(sqrt(eig$values)), eig$vectors)
-  L <- t(chol(D*Sigma))
-  
-  x.pm <- tcrossprod(ones, mu)
-  # pm.term <- sqrt(D+lambda)*tcrossprod(s, ones.short)*v
-  # pm.term <- tcrossprod(s, ones.short)*v
-  # x.pm[1:D,] <- x.pm[1:D,] + pm.term
-  # x.pm[(D+2):(2*D+1),] <- x.pm[(D+2):(2*D+1),] - pm.term
-  x.pm[1:D,] <- x.pm[1:D,] + t(L) #sqrt.Sigma
-  x.pm[(D+2):(2*D+1),] <- x.pm[(D+2):(2*D+1),] - L #sqrt.Sigma
-  
-  #omega.pm <- rep(1/(2*(D+lambda)), 2*D+1)
-  #omega.pm[D+1] <- lambda/(D+lambda)
-  omega.pm <- rep(1, D+1)
-  
-  z <- t(apply(x.pm, 1, g))
-  mu.z <- colSums(z*omega.pm)
-  zmm <- z - mu.z
-  
-  P <- matrix(0, D+1, D+1)
-  for (i in 1:(2*D+1)) {
-    #a <- ifelse(i==D+1, (1-alpha^2+beta), 0)
-    #P <- P + (omega.pm[i]+a)*tcrossprod(zmm[i,])
-  }
-  
-  P <- cov(z)
-  
-  return(P)
-}
-
-
-#' Unscented Logx Variance-Covariance   ???What is W for?
-#'
-#' Function which estimates the variance-covariance of the log of the data, using an 
-#' unscented transformation. 
-#' 
-#' @param mu The mean vector of the underlying distribution
-#' @param Sigma The sigma matrix of the underlying distribution
-#' @param transf The desired transformation. If \code(transf="alr") the inverse 
-#' additive logratio transformation is applied. If \code(transf="clr") the
-#' inverse centered logratio transformation is applied. 
-#'
-#' @return The estimated variance-covariance matrix, logx.
-#' @export
-#'
-#' @examples
-logVarUnscentedW <- function(mu, Sigma, transf=c("alr", "clr")) {
-  transf <- match.arg(transf)
-  
-  D <- length(mu)
-  
-  ones <- rep(1, 2*D+1)
-  ones.short <- rep(1, D)
-  
-  # svd.Sigma <- svd(Sigma)
-  # v <- svd.Sigma$v # This is the transpose of u from Hendeby/Gustafsson paper
-  # s <- svd.Sigma$d
-  #eig <- eigen(Sigma+D+lambda)
-  #eig <- eigen(Sigma+D)
-  #sqrt.Sigma <- eig$vectors%*%tcrossprod(diag(sqrt(eig$values)), eig$vectors)
-  w0 <- 0.05
-  L <- t(chol(D/(1-w0)*Sigma))
-  
-  x.pm <- tcrossprod(ones, mu)
-  # pm.term <- sqrt(D+lambda)*tcrossprod(s, ones.short)*v
-  # pm.term <- tcrossprod(s, ones.short)*v
-  # x.pm[1:D,] <- x.pm[1:D,] + pm.term
-  # x.pm[(D+2):(2*D+1),] <- x.pm[(D+2):(2*D+1),] - pm.term
-  x.pm[1:D,] <- x.pm[1:D,] + t(L) #sqrt.Sigma
-  x.pm[(D+2):(2*D+1),] <- x.pm[(D+2):(2*D+1),] - L #sqrt.Sigma
-  
-  omega.pm <- rep((1-w0)/(2*(D)), 2*D+1)
-  omega.pm[D+1] <- w0
-  
-  z <- t(apply(x.pm, 1, g))
-  mu.z <- colSums(z*omega.pm)
-  zmm <- z - mu.z
-  
-  P <- matrix(0, D+1, D+1)
-  for (i in 1:(2*D+1)) {
-    P <- P + omega.pm[i]*tcrossprod(zmm[i,])
-  }
-  
-  return(P)
-}

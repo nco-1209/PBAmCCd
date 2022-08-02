@@ -1,0 +1,865 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `PBAmCCd'}}
+\par\bigskip{\large \today}
+\end{center}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdftitle = {PBAmCCd: Proportionality Based Association Measures for Count Compositional Data}}}{}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Proportionality Based Association Measures for Count
+Compositional Data}
+\item[Author]\AsIs{Kevin McGregor, Nneka Okaeme}
+\item[Maintainer]\AsIs{Kevin McGregor }\email{kevinmcg@yorku.ca}\AsIs{}
+\item[Description]\AsIs{Package corresponding to the paper ``Proportionality Based Association 
+Measures for Count Compositional Data''.}
+\item[License]\AsIs{Artistic-2.0}
+\item[Version]\AsIs{0.0.1.0}
+\item[RoxygenNote]\AsIs{7.2.1}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{dirichletVariation}{Dirichlet Variation}{dirichletVariation}
+%
+\begin{Description}\relax
+Estimates the variation matrix for empirical compositional data which is based
+on the Dirichlet distribution.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+dirichletVariation(counts)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{counts}] Dataset of compositional data
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+\code{NULL}
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{ebic}{Extended Bayesian Information Criterion}{ebic}
+%
+\begin{Description}\relax
+Calculates the Extende
+d Bayesian Information Criterion (EBIC) of a model.
+Used for model selection.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+ebic(l, n, d, df, gamma)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{l}] Log-likelihood estimates of the model
+
+\item[\code{n}] Number of rows of the data set for which the log-likelihood has been 
+calculated
+
+\item[\code{d}] ?
+
+\item[\code{df}] Degrees of freedom
+
+\item[\code{gamma}] ?
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The value of the EBIC.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{ebicPlot}{Extended Bayesian Information Criterion Plot}{ebicPlot}
+%
+\begin{Description}\relax
+Plots the extended Bayesian information criterion (EBIC) of the model fit for
+various penalization parameters \code{lambda}.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+ebicPlot(fit, xlog = FALSE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{fit}] The model fit
+
+\item[\code{xlog}] TRUE or FALSE. Renders plot with the x-axis in the log-scale if TRUE
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Plot of the EBIC (y-axis) at each lambda (x-axis).
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{g}{Log of the Inverse Additive Log-ratio}{g}
+%
+\begin{Description}\relax
+Function which takes the logarithm of a vector, after the inverse additive 
+log-ratio transformation has been applied to it.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+g(x)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] Compositional data vector which has already been transformed by the 
+additive log-ratio
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A vector which is the log of the inverse of the data which has been
+transformed by the additive logratio transformation.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+vec <- sample(1:250, 9)
+ref <- vec[length(vec)]
+alr.vec <- log(vec[-length(vec)]/ref)
+
+g(alr.vec)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{grad}{Gradient of Normal Random Variables}{grad}
+%
+\begin{Description}\relax
+Calculates the gradient of the normal random variables, on the logit scale.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+grad(v, y, ni, mu, Sigma.inv)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{v}] Additive-log ratio (alr) transform of y
+
+\item[\code{y}] Compositional data set
+
+\item[\code{ni}] Row sums of y?
+
+\item[\code{mu}] Mu vector of y
+
+\item[\code{Sigma.inv}] Sigma inverse matrix of y
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The gradient vector of Normal random variables
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{hess}{Hessian}{hess}
+%
+\begin{Description}\relax
+Calculates the hessian matrix.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+hess(v, ni, Sigma.inv)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{v}] Compositional dataset which has been transformed by the additive log ratio
+
+\item[\code{ni}] Row sums of the raw data ?
+
+\item[\code{Sigma.inv}] Inverse of the Sigma matrix
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The hessian matrix.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logitNormalVariation}{Logit Normal Variation}{logitNormalVariation}
+%
+\begin{Description}\relax
+Estimates the empirical variation matrix of count data that follows a multinomial
+logit-Normal distribution.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logitNormalVariation(
+  mu,
+  Sigma,
+  type = c("standard", "phi", "phis", "rho"),
+  order = c("first", "second")
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mle estimate of the mu matrix
+
+\item[\code{Sigma}] The mle estimate of the sigma matrix
+
+\item[\code{type}] Type of variation metric to be calculated: \code{standard}, \code{phi},
+\code{phis} (a symmetrical version of \code{phi}), or \code{rho}
+
+\item[\code{order}] The order of the Taylor-series approximation to be used in the 
+estimation
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An estimation of the variation matrix, \code{V}.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logitNormalVariationOLD}{Logit Normal Variation (Old Version)}{logitNormalVariationOLD}
+%
+\begin{Description}\relax
+Estimates the empirical variation matrix of count data that follows a multinomial 
+logit-Normal distribution. Differs from the function \code{logitNormalVariation()}
+in that this function does not use a Taylor-series approximation.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logitNormalVariationOLD(
+  mu,
+  Sigma,
+  lmu,
+  lsigma,
+  type = c("standard", "phi", "rho")
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] ?
+
+\item[\code{Sigma}] ?
+
+\item[\code{lmu}] ?
+
+\item[\code{lsigma}] ?
+
+\item[\code{type}] Type of variation metric to be calculated: \code{standard}, \code{phi},
+or \code{rho}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An estimation of the variation matrix, \code{V}.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logLik}{Log-Likelihood}{logLik}
+%
+\begin{Description}\relax
+Calculates the log-likelihood.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logLik(v, y, ni, S, invSigma)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{v}] The additive log ratio transform of y
+
+\item[\code{y}] Compositional data set
+
+\item[\code{ni}] The row sums of y?
+
+\item[\code{S}] ?
+
+\item[\code{invSigma}] The inverse of the Sigma matrix
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated log-likelihood under the Multinomial Logit-Normal distribution.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logLikG}{Gaussian Log-Likelihood}{logLikG}
+%
+\begin{Description}\relax
+Calculates the Gaussian log-likelihood.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logLikG(v, S, invSigma)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{v}] Compositional data set which has been transformed by the additive 
+log ratio
+
+\item[\code{S}] ?
+
+\item[\code{invSigma}] Inverse of the Sigma matrix
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated Gaussian log-likelihood under the Multinomial Logit-Normal distribution.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logVarMC}{Monte Carlo Logx Variance-Covariance}{logVarMC}
+%
+\begin{Description}\relax
+Function which estimates the variance0covariance of the log of the data, using Monte
+Carlo integration.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logVarMC(mu, Sigma, K = 1e+05)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mean vector of the underlying distribution
+
+\item[\code{Sigma}] The variance matrix of the underlying distribution
+
+\item[\code{K}] Number of samples
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated variance-covariance matrix, \code{logx}
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logVarTaylor}{Logx Variance-Covariance}{logVarTaylor}
+%
+\begin{Description}\relax
+Function which estimates the variance-covariance of the log of the data, using a 
+Taylor-series approximation.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logVarTaylor(mu, Sigma, transf = c("alr", "clr"), order = c("first", "second"))
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mean vector of the underlying distribution
+
+\item[\code{Sigma}] The sigma matrix of the underlying distribution
+
+\item[\code{transf}] The desired transformation. If \code{transf="alr"} the inverse 
+additive log-ratio transformation is applied. If \code{transf="clr"} the
+inverse centered log-ratio transformation is applied.
+
+\item[\code{order}] The desired order of the Taylor Series approximation
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated variance-covariance matrix, \code{logx}.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logVarTaylorFull}{Full Logx Variance-Covariance}{logVarTaylorFull}
+%
+\begin{Description}\relax
+Function which estimates the variance-covariance of the log of the data, using a 
+Taylor-series approximation. This function differs from \code{Logx Variance} in
+that the resultant matrix includes a reference category.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logVarTaylorFull(
+  mu,
+  Sigma,
+  transf = c("alr", "clr"),
+  order = c("first", "second")
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mean vector of the underlying distribution
+
+\item[\code{Sigma}] The sigma matrix of the underlying distribution
+
+\item[\code{transf}] The desired transformation. If \code{transf="alr"} the inverse 
+additive logratio transformation is applied. If \code{transf="clr"} the
+inverse centered logratio transformation is applied.
+
+\item[\code{order}] The desired order of the Taylor Series approximation
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated variance-covariance matrix, \code{logx}.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{logVarUnscented}{Unscented Logx Variance-Covariance}{logVarUnscented}
+%
+\begin{Description}\relax
+Function which estimates the variance-covariance of the log of the data, using an 
+unscented transformation.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logVarUnscented(
+  mu,
+  Sigma,
+  transf = c("alr", "clr"),
+  alpha = 0.001,
+  beta = 2,
+  kappa = 0
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mean vector of the underlying distribution
+
+\item[\code{Sigma}] The sigma matrix of the underlying distribution
+
+\item[\code{transf}] The desired transformation. If \code{transf="alr"} the inverse 
+additive log-ratio transformation is applied. If \code{transf="clr"} the
+inverse centered log-ratio transformation is applied.
+
+\item[\code{alpha}] Parameter which controls the spread of the Sigma points
+
+\item[\code{beta}] Parameter which compensates for the distribution
+
+\item[\code{kappa}] Scaling Parameter
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated variance-covariance matrix, logx.
+\end{Value}
+%
+\begin{References}\relax
+Extended and Unscented Kalman Filter Algorithms for Online State Estimation. 
+(2022). MathWorks. https://www.bibliography.com/apa/apa-reference-page-examples-and-format-guide/
+
+Hendeby, G., \& Gustafsson, F. On Nonlinear Transformations Of Gaussian Distributions. 
+https://users.isy.liu.se/en/rt/fredrik/reports/07SSPut.pdf
+\end{References}
+\inputencoding{utf8}
+\HeaderA{logVarUnscentedW}{Unscented Logx Variance-Covariance   ???What is W for?}{logVarUnscentedW}
+%
+\begin{Description}\relax
+Function which estimates the variance-covariance of the log of the data, using an 
+unscented transformation.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+logVarUnscentedW(mu, Sigma, transf = c("alr", "clr"))
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mean vector of the underlying distribution
+
+\item[\code{Sigma}] The sigma matrix of the underlying distribution
+
+\item[\code{transf}] The desired transformation. If \code{transf="alr"} the inverse 
+additive logratio transformation is applied. If \code{transf="clr"} the
+inverse centered logratio transformation is applied.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated variance-covariance matrix, logx.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{MCSample}{Monte Carlo Sample}{MCSample}
+%
+\begin{Description}\relax
+Generates a Monte Carlo sample based on the multinomial logit-normal model.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+MCSample(mu, Sigma, K = 1)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] Mean matrix of the underlying distribution
+
+\item[\code{Sigma}] Variance matrix of the underlying distribution
+
+\item[\code{K}] Number of samples to generate
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+K samples from the multinomial logit-normal model. The number of features
+in the sample is of length(\code{mu})+1.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{MCVariation}{Monte Carlo Variation}{MCVariation}
+%
+\begin{Description}\relax
+Calculates the variation matrix using Monte Carlo integration.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+MCVariation(
+  mu = NULL,
+  Sigma = NULL,
+  x = NULL,
+  K = 1e+06,
+  type = c("standard", "phi", "phis", "rho", "logx")
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{mu}] The mean matrix of the underlying distribution
+
+\item[\code{Sigma}] The variance matrix of the underlying distribution
+
+\item[\code{x}] A sample from the multinomial logit-Normal model. If \code{mu=NULL} 
+and \code{Sigma=NULL}, then x must be provided
+
+\item[\code{K}] Number of Monte Carlo samples to generate
+
+\item[\code{type}] Type of variation metric to be calculated: \code{standard}, \code{phi},
+\code{phis} (a symmetrical version of \code{phi}), \code{rho}, or \code{logx}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The variance matrix, \code{v}.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{mleLR}{Maximum Likelihood Estimate}{mleLR}
+%
+\begin{Description}\relax
+Function which returns maximum likelihood estimates of parameters given a compositional
+dataset. The MLE procedure is based on the Multinomial Logit-Normal distribution, 
+using the EM algorithm from Hoff (2003).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+mleLR(
+  y,
+  max.iter = 10000,
+  max.iter.nr = 100,
+  tol = 1e-06,
+  tol.nr = 1e-06,
+  lambda.gl = 0,
+  gamma = 0.1
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{y}] Compositional dataset
+
+\item[\code{max.iter}] Maximum number of iterations
+
+\item[\code{max.iter.nr}] Maximum number of Newton-Raphson iterations
+
+\item[\code{tol}] Stopping rule
+
+\item[\code{tol.nr}] Stopping rule for the Newton-Raphson algorithm
+
+\item[\code{lambda.gl}] Penalization parameter lambda, for the graphical lasso
+
+\item[\code{gamma}] Gamma value for EBIC calculation of the log-likelihood
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{mlePath}{Maximum Likelihood Estimator Paths}{mlePath}
+%
+\begin{Description}\relax
+Calculates the maximum likelihood estimates of the parameters for various 'paths'
+of the penalization parameter \code{lambda}.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+mlePath(
+  y,
+  max.iter = 10000,
+  max.iter.nr = 100,
+  tol = 1e-06,
+  tol.nr = 1e-06,
+  lambda.gl = NULL,
+  lambda.min.ratio = 0.1,
+  n.lambda = 1,
+  n.cores = NULL,
+  gamma = 0.1
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{y}] Compositional dataset
+
+\item[\code{max.iter}] Maximum number of iterations
+
+\item[\code{max.iter.nr}] Maximum number of Newton-Raphson iterations
+
+\item[\code{tol}] Stopping rule
+
+\item[\code{tol.nr}] Stopping rule for the Newton Raphson algorithm
+
+\item[\code{lambda.gl}] Vector of penalization parameters lambda, for graphical lasso
+
+\item[\code{lambda.min.ratio}] Minimum lambda ratio of the maximum lambda, 
+used for the sequence of lambdas
+
+\item[\code{n.lambda}] Number of lambda to evaluate differnet paths for
+
+\item[\code{n.cores}] Number of cores to use for parallel computation
+
+\item[\code{gamma}] Gamma value for EBIC calculation of the log-likelihood
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The MLE estimates of y for each element lambda of lambda.gl, (\code{est}); 
+the value of the estimates which produce the minimum EBIC, (\code{est.min}); 
+the vector of lambdas used for graphical lasso, (\code{lambda.gl}); the index of 
+the minimum EBIC (extended Bayesian information criterion), (\code{min.idx}); 
+vector containg the EBIC for each lambda, (\code{ebic}).
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{naiveVariation}{Naive Variation}{naiveVariation}
+%
+\begin{Description}\relax
+Estimates the variation matrix of compositional data based strictly on the counts.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+naiveVariation(
+  counts,
+  pseudo.count = 0,
+  type = c("standard", "phi", "phis", "rho", "logx"),
+  use = "everything",
+  set.inf.na = TRUE,
+  already.log = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{counts}] Dataset of compositional data
+
+\item[\code{pseudo.count}] Scaler value added to the data matrix to prevent infinite 
+values caused by taking the log of the counts
+
+\item[\code{type}] Type of variation metric to be calculated: \code{standard}, \code{phi},
+\code{phis} (a symmetrical version of \code{phi}), \code{rho}, or \code{logx}
+
+\item[\code{use}] If equal to \code{"everything"} and there are no infinite values after
+taking the log the calculation will use all data. If equal to \code{"everything"} 
+and there are infinite values after taking the log it is recommended to  run 
+the function again, instead setting the \code{use} parameter to \code{"pairwise.complete.obs"}
+
+\item[\code{set.inf.na}] If \code{TRUE}, sets any infinite values in \code{counts} to \code{NA}
+
+\item[\code{already.log}] If \code{FALSE}, the counts have not been transformed by 
+by the log. This transformation is of the form is \eqn{log(frac{X_{ij}}{s_{i}})}{}, where 
+\eqn{s_{i} = \sum{n=1}^{j} X_{in}}{}, where \eqn{X_{ij}}{} is element \eqn{counts[i,j]}{}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The naive variation matrix, \code{v}.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{pluginVariation}{Plugin Variation}{pluginVariation}
+%
+\begin{Description}\relax
+Estimates the variation matrix for empirical compositional data, ?plugin.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pluginVariation(counts)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{counts}] Dataset of compositional data
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+\code{NULL}
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{rmse}{Root Mean Square Error}{rmse}
+%
+\begin{Description}\relax
+Calculates the root mean square error (RMSE) between two values (i.e. scalers, 
+vectors, or matrices).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+rmse(x, y)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] Value one for comparison (a scaler, vector, or matrix)
+
+\item[\code{y}] Value two for comparison (a scaler, vector, or matrix). Must be the 
+same form as \code{x}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A single scaler value, the RMSE.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+x <- sample(1:20, size = 4)
+y <- sample(1:20, size = 4)
+
+rmse(x,y)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{rmse\_by\_row}{Row Root Mean Square Error}{rmse.Rul.by.Rul.row}
+%
+\begin{Description}\relax
+Calculates the root mean square error (RMSE) between each row of two matrices.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+rmse_by_row(x, y)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] First matrix for comparison
+
+\item[\code{y}] Second matrix for comparison. Must be the same dimensions as \code{x}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A vector. Element \code{i} of the resultant vector is the RMSE which 
+compares row \code{i} of matrix \code{x}, and row \code{i} of matrix \code{y}.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+x <- matrix(sample(1:500, size = 21), nrow=3)
+y <- matrix(sample(1:500, size = 21), nrow=3)
+
+rmse(x,y)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{varEst}{Estimated Variation Matrix}{varEst}
+%
+\begin{Description}\relax
+Estimates the variation matrix of compositional count data.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+varEst(
+  counts,
+  p.model = c("logitNormal", "dirichlet", "plugin"),
+  type = c("standard", "phi", "rho"),
+  refColumn = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{counts}] Dataset of compositional data
+
+\item[\code{p.model}] Probability model for the counts: (\code{logitNormal}, \code{dirichlet},
+or \code{plugin})
+
+\item[\code{type}] Type of variation metric to be calculated: \code{standard}, 
+\code{phi}, or \code{rho}
+
+\item[\code{refColumn}] The reference column to be used for the counts matrix
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The estimated variation matrix for the counts. May be a \code{standard},
+\code{phi}, or \code{rho} variation matrix depending on \code{type} specified.
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{wrapMLE}{Wrapper for MleLR()}{wrapMLE}
+%
+\begin{Description}\relax
+Executes a function call to \code{mlePath()}. Helps with the \code{mclapply()} 
+within \code{mlePath()}
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+wrapMLE(x)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] Input argument for the \code{MLE Function}
+\end{ldescription}
+\end{Arguments}
+\printindex{}
+\end{document}

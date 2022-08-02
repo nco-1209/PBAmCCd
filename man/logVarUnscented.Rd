@@ -18,8 +18,8 @@ logVarUnscented(
 
 \item{Sigma}{The sigma matrix of the underlying distribution}
 
-\item{transf}{The desired transformation. If \code(transf="alr") the inverse 
-additive log-ratio transformation is applied. If \code(transf="clr") the
+\item{transf}{The desired transformation. If \code{transf="alr"} the inverse 
+additive log-ratio transformation is applied. If \code{transf="clr"} the
 inverse centered log-ratio transformation is applied.}
 
 \item{alpha}{Parameter which controls the spread of the Sigma points}

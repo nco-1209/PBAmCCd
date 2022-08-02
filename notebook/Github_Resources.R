@@ -15,3 +15,11 @@ https://stackoverflow.com/questions/51694929/warning-about-utf-8-with-roxygen2
 https://devconnected.com/how-to-change-git-remote-origin/
 
 https://itsmycode.com/git-error-src-refspec-master-does-not-match-any/  
+
+https://kbroman.org/pkg_primer/pages/check.html
+
+https://kbroman.org/pkg_primer/pages/build.html
+
+https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
+  
+  https://kbroman.org/pkg_primer/
