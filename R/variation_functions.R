@@ -481,4 +481,4 @@ logVarUnscentedW <- function(mu, Sigma, transf=c("alr", "clr")) {
   
   return(P)
 }
->>>>>>> e53d6a23c80617619fc4fc915ff4d4b96632f81e
+
