@@ -1,7 +1,8 @@
 
 #' Estimated Variation Matrix
 #' 
-#' Estimates the variation matrix of compositional count data.
+#' Estimates the variation matrix of compositional count data, based on the 
+#' multinomial logit-Normal model.
 #'
 #' @param counts count compositional dataset
 #' @param p.model Probability model for the counts, (\code{logitNormal}
@@ -133,7 +134,7 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
     }
   }
   
-  if (type=="logx") v <- cov(l, use=use)
+  if (type=="logx") v <- compositions::cov(l, use=use)
   
   return(v)
 }
@@ -207,7 +208,7 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
     }
   }
   
-  if (type=="logx") v <- cov(l)
+  if (type=="logx") v <- compositions::cov(l)
   
   return(v)
 }
@@ -288,7 +289,7 @@ logVarMC <- function(mu, Sigma, K=100000) {
   ex <- cbind(exp(x.norm), 1)
   x <- ex/rowSums(ex)
   lx <- log(x)
-  cov(lx)
+  compositions::cov(lx)
 }
 
 #' Full Logx Variance-Covariance
