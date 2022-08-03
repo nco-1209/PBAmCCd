@@ -11,7 +11,6 @@
 #' @return The estimated variation matrix for the counts. May be a \code{standard},
 #' \code{phi}, or \code{rho} variation matrix depending on \code{type} specified. 
 #' 
-#' @examples 
 #' 
 #' @export
 #'
@@ -46,7 +45,6 @@ varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rh
 #'
 #' @return An estimation of the variation matrix, \code{V}.
 #'
-#' @examples
 #' 
 #' @export
 logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho"), 
@@ -99,7 +97,6 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
 #'
 #' @return The naive variation matrix, \code{v}.
 #' 
-#' @examples
 #' 
 #' @export
 #'
@@ -151,7 +148,6 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
 #' @return K samples from the multinomial logit-normal model. The number of features
 #' in the sample is of length(\code{mu})+1.
 #'
-#' @examples
 #' 
 #' @export
 #'
@@ -176,7 +172,6 @@ MCSample <- function(mu, Sigma, K=1) {
 #'
 #' @return The variance matrix, \code{v}.
 #' 
-#' @examples
 #' 
 #' @export
 #'
@@ -292,7 +287,6 @@ logVarTaylor <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first","sec
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}
 #'
-#' @examples
 #' 
 #' @export
 #' 
@@ -319,7 +313,6 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}.
 #' 
-#' @examples
 #'
 #' @export
 #'
