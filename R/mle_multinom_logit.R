@@ -238,7 +238,6 @@ hess <- function(v, ni, Sigma.inv) {
 #'
 #' @return The estimated Gaussian log-likelihood under the Multinomial Logit-Normal distribution.
 #' 
-#' @examples
 #' 
 #'
 logLikG <- function(v, S, invSigma) {
