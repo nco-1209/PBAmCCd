@@ -96,7 +96,7 @@ mleLR <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, lam
     
   }
   
-  S <- cov(v)
+  S <- compositions::cov(v)
   
   log.lik <- logLik(v, y, ni, S, Sigma.inv)
   # Currently only using Gaussian part for loglik
@@ -163,7 +163,7 @@ mlePath <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, l
     pc <- 0.1
     alr.y <- log(y[,-k]+pc) - log(y[,k]+pc)
     d <- NCOL(alr.y)
-    S <- cov(alr.y)
+    S <- compositions::cov(alr.y)
     lmax <- max(max(S - diag(d)), -min(S - diag(d)))
     lmin <- lambda.min.ratio*lmax
     lambda.gl <- exp(seq(log(lmin), log(lmax), length.out=n.lambda))
