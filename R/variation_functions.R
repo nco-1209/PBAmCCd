@@ -1,3 +1,9 @@
+#' @importFrom pkg fun1 fun2
+#' @importFrom pkg2 fun3
+#' @importFrom pkg3 fun4
+NULL
+#> NULL
+
 #' Estimated Variation Matrix
 #' 
 #' Estimates the variation matrix of compositional count data.
