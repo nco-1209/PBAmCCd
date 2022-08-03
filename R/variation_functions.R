@@ -250,7 +250,6 @@ g <- function(x) {
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}. 
 #' 
-#' @examples
 #' 
 #' @export
 #' 
