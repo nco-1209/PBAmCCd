@@ -82,7 +82,7 @@ mleLR <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, lam
     #Sigma.old <- Sigma
     Sigma.inv.old <- Sigma.inv
     #Sigma.inv <- huge::huge(v, lambda.gl, method="glasso", verbose=FALSE)$icov[[1]]
-    gl <- suppressWarnings(glasso::glasso(cov(v), lambda.gl))
+    gl <- suppressWarnings(glasso::glasso(compositions::cov(v), lambda.gl))
     Sigma.inv <- gl$wi
     Sigma <- gl$w
     # Sigma <- matrix(0, k-1, k-1)
