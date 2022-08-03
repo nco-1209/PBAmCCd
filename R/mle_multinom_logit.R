@@ -17,7 +17,6 @@
 #' the log-likelihood (\code{log.lik}); the EBIC (extended Bayesian information criterion) 
 #' of the log-likelihood (\code{ebic}); degrees of freedom of the Sigma.inv matrix (\code{df}).
 #'
-#' @examples
 #' 
 #' @export
 #' 
@@ -119,8 +118,6 @@ mleLR <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, lam
 #' within \code{mlePath()}
 #'
 #' @param x Input argument for the \code{MLE Function}
-#'
-#' @examples
 #' 
 #' 
 wrapMLE <- function(x) {
@@ -152,7 +149,6 @@ wrapMLE <- function(x) {
 #' the minimum EBIC (extended Bayesian information criterion), (\code{min.idx}); 
 #' vector containg the EBIC for each lambda, (\code{ebic}).
 #'
-#' @examples
 #' 
 #' @export
 #' 
@@ -205,7 +201,6 @@ mlePath <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, l
 #'
 #' @return The gradient vector of Normal random variables.
 #'
-#' @examples
 #' 
 #' 
 grad <- function(v, y, ni, mu, Sigma.inv) {
@@ -223,7 +218,6 @@ grad <- function(v, y, ni, mu, Sigma.inv) {
 #'
 #' @return The hessian matrix.
 #'
-#' @examples
 #' 
 #' 
 hess <- function(v, ni, Sigma.inv) {
@@ -265,7 +259,6 @@ logLikG <- function(v, S, invSigma) {
 #'
 #' @return The estimated log-likelihood under the Multinomial Logit-Normal distribution.
 #'
-#' @examples
 #'
 #'
 logLik <- function(v, y, ni, S, invSigma) {
@@ -291,7 +284,6 @@ logLik <- function(v, y, ni, S, invSigma) {
 #'
 #' @return The value of the EBIC.
 #' 
-#' @examples
 #' 
 #' @export
 #'
@@ -309,7 +301,6 @@ ebic <- function(l, n, d, df, gamma) {
 #'
 #' @return Plot of the EBIC (y-axis) against each lambda (x-axis).
 #'
-#' @examples
 #'
 #' @export
 #'
