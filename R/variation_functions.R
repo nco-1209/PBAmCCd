@@ -222,13 +222,6 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
 #' @return A vector which is the log of the inverse of the data which has been
 #' transformed by the additive logratio transformation. 
 #' 
-#' @examples
-#' vec <- sample(1:250, 9)
-#' ref <- vec[length(vec)]
-#' alr.vec <- log(vec[-length(vec)]/ref)
-#' 
-#' g(alr.vec)
-#' 
 #'
 g <- function(x) {
   ls <- log(1+sum(exp(x)))
