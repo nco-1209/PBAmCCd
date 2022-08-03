@@ -13,7 +13,7 @@
 #' @param gamma Gamma value for EBIC calculation of the log-likelihood
 #'
 #' @return The additive log-ratio of y (\code{v}); maximum likelihood estimates of mu, 
-#' Sigma, and Sigma inverse (\code{mu{}, \code{Sigma}, \code{Sigma.inv}); 
+#' Sigma, and Sigma inverse (\code{mu}, \code{Sigma}, \code{Sigma.inv}); 
 #' the log-likelihood (\code{log.lik}); the EBIC (extended Bayesian information criterion) 
 #' of the log-likelihood (\code{ebic}); degrees of freedom of the Sigma.inv matrix (\code{df}).
 #'
