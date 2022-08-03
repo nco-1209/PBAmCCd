@@ -1,3 +1,5 @@
+globalVariables(c("n", "mu", "Sigma", "J"))
+
 #' Maximum Likelihood Estimate
 #' 
 #' Returns the maximum likelihood estimates of parameters given a compositional
