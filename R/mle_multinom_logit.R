@@ -120,8 +120,6 @@ mleLR <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, lam
 #'
 #' @param x Input argument for the \code{MLE Function}
 #'
-#' @return
-#'
 #' @examples
 #' 
 #' 
