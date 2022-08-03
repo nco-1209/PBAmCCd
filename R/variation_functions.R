@@ -1,3 +1,4 @@
+
 #' Estimated Variation Matrix
 #' 
 #' Estimates the variation matrix of compositional count data.
@@ -121,13 +122,13 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
   for (i in 1:J) {
     for (j in 1:J){
       if (type=="standard") {
-        v[i,j] <- var(l[,i]-l[,j], use=use)
+        v[i,j] <- compositions::var(l[,i]-l[,j], use=use)
       } else if (type=="phi") {
-        v[i,j] <- var(l[,i]-l[,j], use=use)/var(l[,i], use=use)
+        v[i,j] <- compositions::var(l[,i]-l[,j], use=use)/compositions::var(l[,i], use=use)
       } else if (type=="phis") {
-        v[i,j] <- var(l[,i]-l[,j], use=use)/(var(l[,i]+l[,j], use=use))
+        v[i,j] <- compositions::var(l[,i]-l[,j], use=use)/(compositions::var(l[,i]+l[,j], use=use))
       } else if (type=="rho") {
-        v[i,j] <- 2*cov(l[,i],l[,j], use=use)/(var(l[,i], use=use)+var(l[,j], use=use))
+        v[i,j] <- 2*compositions::cov(l[,i],l[,j], use=use)/(compositions::var(l[,i], use=use)+compositions::var(l[,j], use=use))
       }
     }
   }
@@ -195,13 +196,13 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
   for (i in 1:J) {
     for (j in 1:J){
       if (type=="standard") {
-        v[i,j] <- var(l[,i]-l[,j])
+        v[i,j] <- compositions::var(l[,i]-l[,j])
       } else if (type=="phi") {
-        v[i,j] <- var(l[,i]-l[,j])/var(l[,i])
+        v[i,j] <- compositions::var(l[,i]-l[,j])/compositions::var(l[,i])
       } else if (type=="phis") {
-        v[i,j] <- var(l[,i]-l[,j])/(var(l[,i])+var(l[,j]))
+        v[i,j] <- compositions::var(l[,i]-l[,j])/(compositions::var(l[,i])+compositions::var(l[,j]))
       } else if (type=="rho") {
-        v[i,j] <- 2*cov(l[,i],l[,j])/(var(l[,i]+l[,j]))
+        v[i,j] <- 2*compositions::cov(l[,i],l[,j])/(compositions::var(l[,i]+l[,j]))
       }
     }
   }
