@@ -9,8 +9,7 @@ NULL
 #' Estimates the variation matrix of compositional count data.
 #'
 #' @param counts count compositional dataset
-#' @param p.model Probability model for the counts: (\code{logitNormal}, \code{dirichlet},
-#' or \code{plugin}) 
+#' @param p.model Probability model for the counts, (\code{logitNormal}
 #' @param type Type of variation metric to be calculated: \code{standard}, 
 #' \code{phi}, or \code{rho}
 #' @param refColumn The reference column to be used for the counts matrix
@@ -22,7 +21,7 @@ NULL
 #' 
 #' @export
 #'
-varEst <- function(counts, p.model=c("logitNormal", "dirichlet", "plugin"), type=c("standard","phi","rho"), refColumn=NULL) {
+varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rho"), refColumn=NULL) {
   if (any(counts<0) | any(counts!=floor(counts)) | !is.matrix(counts)) stop("'counts' must be a matrix containing non-negative integers")
   p.model <- match.arg(p.model)
   type <- match.arg(type)
@@ -33,12 +32,7 @@ varEst <- function(counts, p.model=c("logitNormal", "dirichlet", "plugin"), type
   
   if (p.model=="logitNormal") {
     result <- logitNormalVariation(mu, Sigma, type=type)
-  } else if (p.model=="dirichlet") {
-    result <- dirichletVariation(counts)
-  } else {
-    result <- pluginVariation(counts)
-  }
-  
+  } 
   return(result)
 }
 
