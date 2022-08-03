@@ -276,8 +276,8 @@ logLik <- function(v, y, ni, S, invSigma) {
 #' @param l Log-likelihood estimates of the model
 #' @param n Number of rows of the data set for which the log-likelihood has been 
 #' calculated
-#' @param d The size of the \code{(k-1) \times (k-1)} covariance matrix of a 
-#' \code{k \times k} count-compositional data matrix
+#' @param d The size of the (k-1) by (k-1) covariance matrix of a 
+#' k by k count-compositional data matrix
 #' @param df Degrees of freedom 
 #' @param gamma A tuning parameter. Larger values means more penalization
 #'
