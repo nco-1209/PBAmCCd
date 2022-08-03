@@ -353,8 +353,6 @@ logVarTaylorFull <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first",
   M%*%tcrossprod(Sigma, M) + 0.5*t2
 }
 
-<<<<<<< HEAD
-=======
 #' Unscented Logx Variance-Covariance  
 #'
 #' Function which estimates the variance-covariance of the log of the data, using an 
