@@ -8,3 +8,8 @@ Description: Package corresponding to the paper "Proportionality Based Associati
 License: Artistic-2.0
 Version: 0.0.1.0
 RoxygenNote: 7.2.1
+Imports: 
+  compositions, 
+  glasso, 
+  parallel, 
+  mvtnorm
