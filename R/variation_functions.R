@@ -34,8 +34,8 @@ varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rh
 
 #' Logit Normal Variation
 #' 
-#' Estimates the empirical metrics of association of count compositional data 
-#' which follows a multinomial logit-Normal distribution. Estimate is performed using 
+#' Estimates the variation matrix of count compositional data 
+#' based on a multinomial logit-Normal distribution. Estimate is performed using 
 #' only the parameters of the distribution. 
 #'
 #' @param mu The mle estimate of the mu matrix 
@@ -80,8 +80,8 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
 
 #' Naive Variation
 #' 
-#' Estimates the variation matrix of counte compositional data using strictly the 
-#' dataset.
+#' Estimates the variation matrix of count compositional data using the proportions
+#' of a count compositional dataset. 
 #'
 #' @param counts Dataset of compositional data
 #' @param pseudo.count Scaler value added to the data matrix to prevent infinite 
@@ -141,13 +141,13 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
 
 #' Monte Carlo Sample
 #' 
-#' Generates a Monte Carlo sample based on the multinomial logit-normal model. 
+#' Generates a Monte Carlo sample based on the multinomial logit-Normal model. 
 #'
 #' @param mu Mean matrix of the underlying distribution
 #' @param Sigma Variance matrix of the underlying distribution
 #' @param K Number of samples to generate
 #'
-#' @return K samples from the multinomial logit-normal model. The number of features
+#' @return \code{K} samples from the multinomial logit-normal model. The number of features
 #' in the sample is of length(\code{mu})+1.
 #'
 #' 
@@ -161,8 +161,8 @@ MCSample <- function(mu, Sigma, K=1) {
 
 #' Monte Carlo Variation
 #' 
-#' Estimates the "true" values of the metrics of association for count compositional 
-#' data, using large-sample Monte-Carlo methods.  
+#' Estimates the "true" values of the variation matrix for count compositional 
+#' data based on the multinomial logit-Normal model, using large-sample Monte-Carlo methods.
 #'
 #' @param mu The mean matrix of the underlying distribution 
 #' @param Sigma The variance matrix of the underlying distribution 
@@ -215,14 +215,17 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
 
 #' Log of the Inverse Additive Log-ratio 
 #' 
-#' Function which takes the logarithm of a vector, after the inverse additive 
-#' log-ratio transformation has been applied to it. 
+#' Calculates the log of a vector after applying the
+#' inverse additive log-ratio transformation to it. The transformation is 
+#' \code{g(x)=log(alrInx(x))}, where \code{x} is a vector transformed by the 
+#' additive log-ration.
 #'
 #' @param x Compositional data vector which has already been transformed by the 
 #' additive log-ratio
 #'
 #' @return A vector which is the log of the inverse of the data which has been
 #' transformed by the additive logratio transformation. 
+#' 
 #' 
 #'
 g <- function(x) {
@@ -233,7 +236,7 @@ g <- function(x) {
 
 #' Logx Variance-Covariance
 #' 
-#' Function which estimates the variance-covariance of the log of a count 
+#' Estimates the variance-covariance of the log of a count 
 #' compositional dataset, using a Taylor-series approximation. 
 #'
 #' @param mu The mean vector of the underlying distribution
@@ -272,7 +275,7 @@ logVarTaylor <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first","sec
 
 #' Monte Carlo Logx Variance-Covariance
 #' 
-#' Function which estimates the variance0covariance of the log of the data, using Monte
+#' Estimates the variance-covariance of the log of the data, using Monte
 #' Carlo integration. 
 #'
 #' @param mu The mean vector of the underlying distribution
@@ -294,7 +297,7 @@ logVarMC <- function(mu, Sigma, K=100000) {
 
 #' Full Logx Variance-Covariance
 #' 
-#' Function which estimates the variance-covariance of the log of the data, using a 
+#' Estimates the variance-covariance of the log of the data, using a 
 #' Taylor-series approximation. This function differs from \code{Logx Variance} in
 #' that the resultant matrix includes a reference category. 
 #'
