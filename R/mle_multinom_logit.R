@@ -2,22 +2,28 @@ globalVariables(c("n", "mu", "Sigma", "J"))
 
 #' Maximum Likelihood Estimate
 #' 
-#' Returns the maximum likelihood estimates of parameters given a compositional
-#' dataset. The MLE procedure is based on the multinomial logit-Normal distribution, 
-#' using the EM algorithm from Hoff (2003).
+#' Returns the maximum likelihood estimates of multinomial logit-Normal model 
+#' parameters given a compositional dataset. The MLE procedure is based on the 
+#' multinomial logit-Normal distribution, using the EM algorithm from Hoff (2003).
 #'
-#' @param y Count compositional dataset
+#' @param y Count-compositional dataset
 #' @param max.iter Maximum number of iterations 
 #' @param max.iter.nr Maximum number of Newton-Raphson iterations
 #' @param tol Stopping rule
 #' @param tol.nr Stopping rule for the Newton-Raphson algorithm
-#' @param lambda.gl Penalization parameter lambda, for the graphical lasso
+#' @param lambda.gl Penalization parameter lambda, for the graphical lasso penalty. Controls
+#' the sparsity of Sigma
 #' @param gamma Gamma value for EBIC calculation of the log-likelihood
 #'
 #' @return The additive log-ratio of y (\code{v}); maximum likelihood estimates of mu, 
 #' Sigma, and Sigma inverse (\code{mu}, \code{Sigma}, \code{Sigma.inv}); 
 #' the log-likelihood (\code{log.lik}); the EBIC (extended Bayesian information criterion) 
-#' of the log-likelihood (\code{ebic}); degrees of freedom of the Sigma.inv matrix (\code{df}).
+#' of the log-likelihood of the multinomial logit-Normal model with the 
+#' graphical lasso penalty (\code{ebic}); degrees of freedom of the Sigma.inv matrix (\code{df}).
+#' 
+#' @note The graphical lasso penalty 
+#' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
+#' The penalization parameter lambda controls the sparsity of Sigma. 
 #'
 #' 
 #' @export
@@ -131,14 +137,17 @@ wrapMLE <- function(x) {
 #' 
 #' Calculates the maximum likelihood estimates of the parameters for the 
 #' mutlinomial logit-Normal distribution under various values
-#' of the penalization parameter \code{lambda}.
+#' of the penalization parameter \code{lambda}. Parameter \code{lambda} controls
+#' the sparsity of the covariance matrix \code{Sigma}, and penalizes the false 
+#' large correlations that may arise in microbiome data when a large
+#' number of OTU-associations are being calculated. 
 #'
 #' @param y Count compositional dataset
 #' @param max.iter Maximum number of iterations
 #' @param max.iter.nr Maximum number of Newton-Raphson iterations
 #' @param tol Stopping rule
 #' @param tol.nr Stopping rule for the Newton Raphson algorithm
-#' @param lambda.gl Vector of penalization parameters lambda, for graphical lasso
+#' @param lambda.gl Vector of penalization parameters lambda, for the graphical lasso penalty
 #' @param lambda.min.ratio Minimum lambda ratio of the maximum lambda, 
 #' used for the sequence of lambdas
 #' @param n.lambda Number of lambda to evaluate differnet paths for
@@ -150,7 +159,14 @@ wrapMLE <- function(x) {
 #' the vector of lambdas used for graphical lasso, (\code{lambda.gl}); the index of 
 #' the minimum EBIC (extended Bayesian information criterion), (\code{min.idx}); 
 #' vector containg the EBIC for each lambda, (\code{ebic}).
-#'
+#' 
+#' @note If using parellel computing, consider setting \code{n.cores} to be equal
+#' to the number of lambdas being evaluated for, \code{n.lambda}.
+#' 
+#' @note The graphical lasso penalty 
+#' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
+#' The penalization parameter lambda controls the sparsity of Sigma. 
+#' 
 #' 
 #' @export
 #' 
@@ -273,7 +289,8 @@ logLik <- function(v, y, ni, S, invSigma) {
 #' Extended Bayesian Information Criterion
 #' 
 #' Calculates the Extended Bayesian Information Criterion (EBIC) of a model.
-#' Used for model selection.
+#' Used for model selection to asses the fit of the multinomial logit-Normal 
+#' model which includes a graphical lasso penalty.
 #'
 #' @param l Log-likelihood estimates of the model
 #' @param n Number of rows of the data set for which the log-likelihood has been 
@@ -284,6 +301,10 @@ logLik <- function(v, y, ni, S, invSigma) {
 #' @param gamma A tuning parameter. Larger values means more penalization
 #'
 #' @return The value of the EBIC.
+#' 
+#' @note The graphical lasso penalty 
+#' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
+#' The penalization parameter lambda controls the sparsity of Sigma. 
 #' 
 #' 
 #' @export
@@ -298,7 +319,7 @@ ebic <- function(l, n, d, df, gamma) {
 #' various penalization parameters \code{lambda}. 
 #'
 #' @param fit The model fit 
-#' @param xlog TRUE or FALSE. Renders plot with the x-axis in the log-scale if TRUE
+#' @param xlog TRUE or FALSE. Renders plot with the x-axis in the log-scale if \code{TRUE}
 #'
 #' @return Plot of the EBIC (y-axis) against each lambda (x-axis).
 #'
