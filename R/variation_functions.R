@@ -13,6 +13,9 @@
 #' @return The estimated variation matrix for the counts. May be a \code{standard},
 #' \code{phi}, or \code{rho} variation matrix depending on \code{type} specified. 
 #' 
+#' @examples 
+#' data(mle_results_p100)
+#' varEst(dat.ss, p.model="logitNormal", type="standard")
 #' 
 #' @export
 #'
@@ -47,6 +50,14 @@ varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rh
 #'
 #' @return An estimation of the variation matrix, \code{V}.
 #'
+#' @examples 
+#' mu.hat <- mle$est.min$mu
+#' Sigma.hat <- mle$est.min$Sigma
+#' 
+#' logitNormalVariation(mu.hat, Sigma.hat) #Standard logit-Normal estimates of variance
+#' logitNormalVariation(mu.hat, Sigma.hat, type="phi", order="second") #Logit-Normal based estimate of phi
+#' logitNormalVariation(mu.hat, Sigma.hat, type="phis", order="second") #Logit-Normal based estimate of phis
+#' logitNormalVariation(mu.hat, Sigma.hat, type="rho", order="second") #Logit-Normal based estimate of rho
 #' 
 #' @export
 logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho"), 
@@ -99,6 +110,13 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
 #'
 #' @return The naive variation matrix, \code{v}.
 #' 
+#' @examples 
+#' n.g <- n.col(dat.ss)
+#' 
+#' naiveVariation(dat.ss)[-n.g,-n.g] #Standard naive estimate of the variance
+#' naiveVariation(dat.ss, type="phi")[-n.g,-n.g] #Logit-Normal based naive estimate of phi
+#' naiveVariation(dat.ss, type="phis")[-n.g,-n.g] #Logit-Normal based naive estimate of phis
+#' naiveVariation(dat.ss, type="rho")[-n.g,-n.g] #Logit-Normal based naive estimate of rho
 #' 
 #' @export
 #'
@@ -150,6 +168,10 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
 #' @return \code{K} samples from the multinomial logit-normal model. The number of features
 #' in the sample is of length(\code{mu})+1.
 #'
+#' @examples 
+#' mu <- mle$est.min$mu
+#' Sigma <- mle$est.min$Sigma
+#' MCSample(mu, Sigma, K=1)
 #' 
 #' @export
 #'
@@ -173,6 +195,15 @@ MCSample <- function(mu, Sigma, K=1) {
 #'  \code{phis} (a symmetrical version of \code{phi}), \code{rho}, or \code{logx}
 #'
 #' @return The variance matrix, \code{v}.
+#' 
+#' @examples
+#' mu <- mle$est.min$mu
+#' Sigma <- mle$est.min$Sigma
+#' 
+#' MCVariation(mu, Sigma, type=standard) #Monte Carlo estimate of the standard variation, 
+#'                                       #using mu and Sigma    
+#' MCVariation(x=dat.ss type=standard)   #Monte Carlo estimate of the standard variation, 
+#'                                       #using x
 #' 
 #' 
 #' @export
@@ -248,6 +279,13 @@ g <- function(x) {
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}. 
 #' 
+#' @examples 
+#' mu <- mle$est.min$mu
+#' Sigma <- mle$est.min$Sigma
+#' 
+#' #Second order approximation of the variance-covariance matrix of the log of the data,
+#' #with an alr transformation. 
+#' logVarTaylor(mu, Sigma, transf="alr", order="second")
 #' 
 #' @export
 #' 
@@ -284,6 +322,10 @@ logVarTaylor <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first","sec
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}
 #'
+#' @examples 
+#' mu <- mle$est.min$mu
+#' Sigma <- mle$est.min$Sigma
+#' logVarMC(mu, Sigma)
 #' 
 #' @export
 #' 
@@ -298,8 +340,8 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #' Full Logx Variance-Covariance
 #' 
 #' Estimates the variance-covariance of the log of the data, using a 
-#' Taylor-series approximation. This function differs from \code{Logx Variance} in
-#' that the resultant matrix includes a reference category. 
+#' Taylor-series approximation. This function differs from the function 
+#' \code{Logx Variance-Covariance} in that the resultant matrix includes a reference category. 
 #'
 #' @param mu The mean vector of the underlying distribution
 #' @param Sigma The sigma matrix of the underlying distribution
@@ -310,6 +352,13 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}.
 #' 
+#' @examples 
+#' mu <- mle$est.min$mu
+#' Sigma <- mle$est.min$Sigma
+#' 
+#' #Second order approximation of the variance-covariance matrix of the log of the data,
+#' #with an alr transformation. 
+#' logVarTaylorFull(mu, Sigma, transf="alr", order="second")
 #'
 #' @export
 #'
