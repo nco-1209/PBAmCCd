@@ -23,7 +23,19 @@ globalVariables(c("n", "mu", "Sigma", "J"))
 #' 
 #' @note The graphical lasso penalty 
 #' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
-#' The penalization parameter lambda controls the sparsity of Sigma. 
+#' The penalization parameter lambda controls the sparsity of Sigma.
+#' 
+#' @note This function is also used within the \doe{mlePath()} function.
+#' 
+#' @examples
+#' data(mle_results_p100)
+#' y.dat <- dat.ss
+#' mle_y.dat <- mleLR(y.dat)
+#' 
+#' mle_y.dat$mu #mle mu of y.dat
+#' mle_y.dat$Sigma #mle Sigma of y.dat
+#' mle_y.dat$ebic #ebic of the fitted model
+#' 
 #'
 #' 
 #' @export
@@ -167,6 +179,16 @@ wrapMLE <- function(x) {
 #' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
 #' The penalization parameter lambda controls the sparsity of Sigma. 
 #' 
+#' @examples 
+#' data(mle_results_p100)
+#' y.dat <- dat.ss
+#' mle.sim <- mlePath(dat.ss tol=1e-4, tol.nr=1e-4, n.lambda = n.lam, lambda.min.ratio = lmr, 
+#' gamma = 0.1)
+#' 
+#' mu.hat <- mle.sim$est.min$mu #optimal mle of mu based on ebic 
+#' Sigma.hat <- mle.sim$est.min$Sigma #optimal mle of Sigma based on ebic 
+#' Sigma.hat <- mle.sim$est.min$ebic #minimum ebic 
+#' 
 #' 
 #' @export
 #' 
@@ -306,6 +328,15 @@ logLik <- function(v, y, ni, S, invSigma) {
 #' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
 #' The penalization parameter lambda controls the sparsity of Sigma. 
 #' 
+#' @examples 
+#' data(mle_results_p100)
+#' 
+#' log.lik_1 <- mle$est[[1]]$log.lik
+#' n <- NROW(dat.ss)
+#' k <- NCOL(dat.ss)
+#' df_1 <- mle$est[[1]]$df
+#' 
+#' ebic(log.lik_1, n, k, df_1, gamma=0.1)
 #' 
 #' @export
 #'
@@ -323,8 +354,16 @@ ebic <- function(l, n, d, df, gamma) {
 #'
 #' @return Plot of the EBIC (y-axis) against each lambda (x-axis).
 #'
+#' @examples 
+#' data(mle_results_p100)
+#' y.dat <- dat.ss
+#' mle.sim <- mlePath(dat.ss tol=1e-4, tol.nr=1e-4, n.lambda = n.lam, lambda.min.ratio = lmr, 
+#' gamma = 0.1)
+#' 
+#' ebicPlot(mle.sim, xlog = TRUE)
 #'
 #' @export
+#' 
 #'
 ebicPlot <- function(fit, xlog=FALSE) {
   if (xlog) {
