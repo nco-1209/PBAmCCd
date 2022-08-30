@@ -6,8 +6,8 @@
 #'
 #' @usage data(mle_results_p100)
 #'
-#' @format Gives mle estimates of \code{mu} and \code{Sigma}, as well as a single-cell
-#' dataset of 96 samples and 100 genes.  
+#' @format Gives mle estimates such as \code{mu} and \code{Sigma} (\code{mle}), as well as a single-cell
+#' dataset of 96 samples and 100 genes (\code{dat.ss}).  
 #'
 #' @keywords datasets
 #'
@@ -15,6 +15,7 @@
 #' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
+#' dat.ss
 #' 
 #' 
 "mle_results_p100"
