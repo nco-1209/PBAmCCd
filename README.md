@@ -5,6 +5,8 @@ R-package accompanying the paper "Proportionaly based association measures of co
 on count compositional data. 
 
 devtools::install_github("nco-1209/PBAmCCd")
+
 OR 
+
 library(devtools)
 install_github("nco-1209/PBAmCCd")
