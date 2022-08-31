@@ -37,12 +37,12 @@ varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rh
 
 #' Logit Normal Variation
 #' 
-#' Estimates the variation matrix of count compositional data 
+#' Estimates the variation matrix of count-compositional data 
 #' based on a multinomial logit-Normal distribution. Estimate is performed using 
 #' only the parameters of the distribution. 
 #'
 #' @param mu The mle estimate of the mu matrix 
-#' @param Sigma The mle estimate of the sigma matrix
+#' @param Sigma The mle estimate of the Sigma matrix
 #' @param type Type of variation metric to be calculated: \code{standard}, \code{phi},
 #' \code{phis} (a symmetrical version of \code{phi}), or \code{rho}
 #' @param order The order of the Taylor-series approximation to be used in the 
@@ -51,6 +51,7 @@ varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rh
 #' @return An estimation of the variation matrix, \code{V}.
 #'
 #' @examples 
+#' data(mle_results_p100)
 #' mu.hat <- mle$est.min$mu
 #' Sigma.hat <- mle$est.min$Sigma
 #' 
@@ -94,7 +95,7 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
 #' Estimates the variation matrix of count compositional data using the proportions
 #' of a count compositional dataset. 
 #'
-#' @param counts Dataset of compositional data
+#' @param counts Count-compositional dataset
 #' @param pseudo.count Scaler value added to the data matrix to prevent infinite 
 #' values caused by taking the log of the counts
 #' @param type Type of variation metric to be calculated: \code{standard}, \code{phi},
@@ -105,12 +106,13 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
 #' the function again, instead setting the \code{use} parameter to \code{"pairwise.complete.obs"}
 #' @param set.inf.na If \code{TRUE}, sets any infinite values in \code{counts} to \code{NA}
 #' @param already.log If \code{FALSE}, the counts have not been transformed by 
-#' by the log. This transformation is of the form is \eqn{log(frac{X_{ij}}{s_{i}})}, where 
+#' by the log. This transformation is of the form \eqn{log(frac{X_{ij}}{s_{i}})}, where 
 #' \eqn{s_{i} = \sum{n=1}^{j} X_{in}}, where \eqn{X_{ij}} is element \eqn{counts[i,j]}
 #'
 #' @return The naive variation matrix, \code{v}.
 #' 
 #' @examples 
+#' data(mle_results_p100)
 #' n.g <- n.col(dat.ss)
 #' 
 #' naiveVariation(dat.ss)[-n.g,-n.g] #Standard naive estimate of the variance
@@ -161,14 +163,15 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
 #' 
 #' Generates a Monte Carlo sample based on the multinomial logit-Normal model. 
 #'
-#' @param mu Mean matrix of the underlying distribution
-#' @param Sigma Variance matrix of the underlying distribution
+#' @param mu Mean vector of a dataset following the multinomial logit-Normal model
+#' @param Sigma Variance matrix a dataset following the multinomial logit-Normal model
 #' @param K Number of samples to generate
 #'
 #' @return \code{K} samples from the multinomial logit-normal model. The number of features
 #' in the sample is of length(\code{mu})+1.
 #'
 #' @examples 
+#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' MCSample(mu, Sigma, K=1)
@@ -183,11 +186,11 @@ MCSample <- function(mu, Sigma, K=1) {
 
 #' Monte Carlo Variation
 #' 
-#' Estimates the "true" values of the variation matrix for count compositional 
+#' Estimates the "true" values of the variation matrix for count-compositional 
 #' data based on the multinomial logit-Normal model, using large-sample Monte-Carlo methods.
 #'
-#' @param mu The mean matrix of the underlying distribution 
-#' @param Sigma The variance matrix of the underlying distribution 
+#' @param mu The mean vector of a dataset following the multinomial logit-Normal model
+#' @param Sigma The variance matrix of a dataset following the multinomial logit-Normal model
 #' @param x A sample from the multinomial logit-Normal model. If \code{mu=NULL} 
 #' and \code{Sigma=NULL}, then x must be provided
 #' @param K Number of Monte Carlo samples to generate
@@ -197,6 +200,8 @@ MCSample <- function(mu, Sigma, K=1) {
 #' @return The variance matrix, \code{v}.
 #' 
 #' @examples
+#' data(mle_results_p100)
+#' 
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' 
@@ -249,13 +254,20 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
 #' Calculates the log of a vector after applying the
 #' inverse additive log-ratio transformation to it. The transformation is 
 #' \code{g(x)=log(alrInx(x))}, where \code{x} is a vector transformed by the 
-#' additive log-ration.
+#' additive log-ratio.
 #'
 #' @param x Compositional data vector which has already been transformed by the 
 #' additive log-ratio
 #'
 #' @return A vector which is the log of the inverse of the data which has been
 #' transformed by the additive logratio transformation. 
+#' 
+#' @example 
+#' data(mle_results_p100)
+#' col1 <- dat.ss[,1]
+#' alr_col1 <- compositions::alr(col1)
+#' 
+#' g(alr_col1)
 #' 
 #' 
 #'
@@ -267,11 +279,11 @@ g <- function(x) {
 
 #' Logx Variance-Covariance
 #' 
-#' Estimates the variance-covariance of the log of a count 
-#' compositional dataset, using a Taylor-series approximation. 
+#' Estimates the variance-covariance of the log of a count-compositional dataset, 
+#' using a Taylor-series approximation. 
 #'
-#' @param mu The mean vector of the underlying distribution
-#' @param Sigma The sigma matrix of the underlying distribution
+#' @param mu The mean vector of a dataset following the multinomial logit-Normal model
+#' @param Sigma The sigma matrix of a dataset following the multinomial logit-Normal model
 #' @param transf The desired transformation. If \code{transf="alr"} the inverse 
 #' additive log-ratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered log-ratio transformation is applied. 
@@ -280,6 +292,7 @@ g <- function(x) {
 #' @return The estimated variance-covariance matrix, \code{logx}. 
 #' 
 #' @examples 
+#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' 
@@ -316,13 +329,14 @@ logVarTaylor <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first","sec
 #' Estimates the variance-covariance of the log of the data, using Monte
 #' Carlo integration. 
 #'
-#' @param mu The mean vector of the underlying distribution
-#' @param Sigma The variance matrix of the underlying distribution
+#' @param mu The mean vector of a dataset following the multinomial logit-Normal model
+#' @param Sigma The variance matrix of a dataset following the multinomial logit-Normal model
 #' @param K Number of samples 
 #'
 #' @return The estimated variance-covariance matrix, \code{logx}
 #'
 #' @examples 
+#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' logVarMC(mu, Sigma)
@@ -343,8 +357,8 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #' Taylor-series approximation. This function differs from the function 
 #' \code{Logx Variance-Covariance} in that the resultant matrix includes a reference category. 
 #'
-#' @param mu The mean vector of the underlying distribution
-#' @param Sigma The sigma matrix of the underlying distribution
+#' @param mu The mean vector of a dataset following the multinomial logit-Normal model
+#' @param Sigma The sigma matrix of a dataset following the multinomial logit-Normal model
 #' @param transf The desired transformation. If \code{transf="alr"} the inverse 
 #' additive logratio transformation is applied. If \code{transf="clr"} the
 #' inverse centered logratio transformation is applied. 
@@ -353,6 +367,7 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #' @return The estimated variance-covariance matrix, \code{logx}.
 #' 
 #' @examples 
+#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' 
