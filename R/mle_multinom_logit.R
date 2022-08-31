@@ -3,7 +3,7 @@ globalVariables(c("n", "mu", "Sigma", "J"))
 #' Maximum Likelihood Estimate
 #' 
 #' Returns the maximum likelihood estimates of multinomial logit-Normal model 
-#' parameters given a compositional dataset. The MLE procedure is based on the 
+#' parameters given a count-compositional dataset. The MLE procedure is based on the 
 #' multinomial logit-Normal distribution, using the EM algorithm from Hoff (2003).
 #'
 #' @param y Count-compositional dataset
@@ -15,28 +15,27 @@ globalVariables(c("n", "mu", "Sigma", "J"))
 #' the sparsity of Sigma
 #' @param gamma Gamma value for EBIC calculation of the log-likelihood
 #'
-#' @return The additive log-ratio of y (\code{v}); maximum likelihood estimates of mu, 
-#' Sigma, and Sigma inverse (\code{mu}, \code{Sigma}, \code{Sigma.inv}); 
+#' @return The additive log-ratio of y (\code{v}); maximum likelihood estimates of 
+#' \code{mu}, \code{Sigma}, and \code{Sigma.inv;
 #' the log-likelihood (\code{log.lik}); the EBIC (extended Bayesian information criterion) 
 #' of the log-likelihood of the multinomial logit-Normal model with the 
-#' graphical lasso penalty (\code{ebic}); degrees of freedom of the Sigma.inv matrix (\code{df}).
+#' graphical lasso penalty (\code{ebic}); degrees of freedom of the \code{Sigma.inv}
+#' matrix (\code{df}).
 #' 
 #' @note The graphical lasso penalty 
 #' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
 #' The penalization parameter lambda controls the sparsity of Sigma.
 #' 
-#' @note This function is also used within the \doe{mlePath()} function.
+#' @note This function is also used within the \code{mlePath()} function.
 #' 
 #' @examples
 #' data(mle_results_p100)
-#' y.dat <- dat.ss
-#' mle_y.dat <- mleLR(y.dat)
+#' mle_dat <- mleL(dat.ss)
 #' 
-#' mle_y.dat$mu #mle mu of y.dat
-#' mle_y.dat$Sigma #mle Sigma of y.dat
-#' mle_y.dat$ebic #ebic of the fitted model
+#' mle_dat$mu #mle mu of dat.ss
+#' mle_dat$Sigma #mle Sigma of dat.ss
+#' mle_dat$ebic #ebic of the fitted model
 #' 
-#'
 #' 
 #' @export
 #' 
@@ -152,9 +151,9 @@ wrapMLE <- function(x) {
 #' of the penalization parameter \code{lambda}. Parameter \code{lambda} controls
 #' the sparsity of the covariance matrix \code{Sigma}, and penalizes the false 
 #' large correlations that may arise in microbiome data when a large
-#' number of OTU-associations are being calculated. 
+#' number of OTU-associations are being measured. 
 #'
-#' @param y Count compositional dataset
+#' @param y Count-compositional dataset
 #' @param max.iter Maximum number of iterations
 #' @param max.iter.nr Maximum number of Newton-Raphson iterations
 #' @param tol Stopping rule
@@ -162,17 +161,17 @@ wrapMLE <- function(x) {
 #' @param lambda.gl Vector of penalization parameters lambda, for the graphical lasso penalty
 #' @param lambda.min.ratio Minimum lambda ratio of the maximum lambda, 
 #' used for the sequence of lambdas
-#' @param n.lambda Number of lambda to evaluate differnet paths for
-#' @param n.cores Number of cores to use for parallel computation
+#' @param n.lambda Number of lambda to evaluate different paths for
+#' @param n.cores Number of cores to use (for parallel computation)
 #' @param gamma Gamma value for EBIC calculation of the log-likelihood
 #'
 #' @return The MLE estimates of \code{y} for each element lambda of lambda.gl, (\code{est}); 
 #' the value of the estimates which produce the minimum EBIC, (\code{est.min}); 
 #' the vector of lambdas used for graphical lasso, (\code{lambda.gl}); the index of 
 #' the minimum EBIC (extended Bayesian information criterion), (\code{min.idx}); 
-#' vector containg the EBIC for each lambda, (\code{ebic}).
+#' vector containing the EBIC for each lambda, (\code{ebic}).
 #' 
-#' @note If using parellel computing, consider setting \code{n.cores} to be equal
+#' @note If using parallel computing, consider setting \code{n.cores} to be equal
 #' to the number of lambdas being evaluated for, \code{n.lambda}.
 #' 
 #' @note The graphical lasso penalty 
@@ -181,7 +180,6 @@ wrapMLE <- function(x) {
 #' 
 #' @examples 
 #' data(mle_results_p100)
-#' y.dat <- dat.ss
 #' mle.sim <- mlePath(dat.ss tol=1e-4, tol.nr=1e-4, n.lambda = n.lam, lambda.min.ratio = lmr, 
 #' gamma = 0.1)
 #' 
@@ -233,8 +231,8 @@ mlePath <- function(y, max.iter=10000, max.iter.nr=100, tol=1e-6, tol.nr=1e-6, l
 #' 
 #' Calculates the gradient of the normal random variables, on the logit scale.
 #'
-#' @param v Additive-log ratio (alr) transform of y
-#' @param y Count compositional data set
+#' @param v Additive logratio (alr) transform of y
+#' @param y Count compositional dataset
 #' @param ni Row sums of y
 #' @param mu Mu vector of y
 #' @param Sigma.inv Sigma inverse matrix of y
@@ -252,7 +250,7 @@ grad <- function(v, y, ni, mu, Sigma.inv) {
 #' 
 #' Calculates the hessian matrix.
 #'
-#' @param v Count compositional dataset which has been transformed by the additive log ratio
+#' @param v Count-compositional dataset which has been transformed by the additive logratio
 #' @param ni Row sums of the raw data 
 #' @param Sigma.inv Inverse of the Sigma matrix
 #'
@@ -269,14 +267,14 @@ hess <- function(v, ni, Sigma.inv) {
 
 #' Gaussian Log-Likelihood
 #' 
-#' Calculates the Gaussian log-likelihood,  under the multinomial logit-Normal model.
+#' Calculates the Gaussian log-likelihood, under the multinomial logit-Normal model.
 #'
-#' @param v Count compositional dataset which has been transformed by the additive-
-#' log ratio
+#' @param v Count-compositional dataset which has been transformed by the additive
+#' logratio
 #' @param S Covariance of \code{v}
 #' @param invSigma Inverse of the Sigma matrix
 #'
-#' @return The estimated Gaussian log-likelihood under the Multinomial Logit-Normal distribution.
+#' @return The estimated Gaussian log-likelihood under the Multinomial logit-Normal distribution.
 #' 
 #' 
 #'
@@ -290,13 +288,13 @@ logLikG <- function(v, S, invSigma) {
 #' 
 #' Calculates the log-likelihood, under the multinomial logit-Normal model.
 #'
-#' @param v The additive log ratio transform of y
-#' @param y Compositional data set
+#' @param v The additive logratio transform of y
+#' @param y Compositional dataset
 #' @param ni The row sums of y
 #' @param S Covariance of \code{v}
 #' @param invSigma The inverse of the Sigma matrix
 #'
-#' @return The estimated log-likelihood under the Multinomial Logit-Normal distribution.
+#' @return The estimated log-likelihood under the Multinomial logit-Normal distribution.
 #'
 #'
 #'
@@ -356,7 +354,6 @@ ebic <- function(l, n, d, df, gamma) {
 #'
 #' @examples 
 #' data(mle_results_p100)
-#' y.dat <- dat.ss
 #' mle.sim <- mlePath(dat.ss tol=1e-4, tol.nr=1e-4, n.lambda = n.lam, lambda.min.ratio = lmr, 
 #' gamma = 0.1)
 #' 
@@ -412,7 +409,7 @@ rmse <- function(x,y) {
 #' x <- matrix(sample(1:500, size = 21), nrow=3)
 #' y <- matrix(sample(1:500, size = 21), nrow=3)
 #' 
-#' rmse(x,y)
+#' rmse_by_row(x,y)
 #' 
 #' @export
 #' 
