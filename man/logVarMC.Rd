@@ -7,9 +7,9 @@
 logVarMC(mu, Sigma, K = 1e+05)
 }
 \arguments{
-\item{mu}{The mean vector of the underlying distribution}
+\item{mu}{The mean vector of a dataset following the multinomial logit-Normal model}
 
-\item{Sigma}{The variance matrix of the underlying distribution}
+\item{Sigma}{The variance matrix of a dataset following the multinomial logit-Normal model}
 
 \item{K}{Number of samples}
 }
@@ -17,6 +17,12 @@ logVarMC(mu, Sigma, K = 1e+05)
 The estimated variance-covariance matrix, \code{logx}
 }
 \description{
-Function which estimates the variance0covariance of the log of the data, using Monte
+Estimates the variance-covariance of the log of the data, using Monte
 Carlo integration.
+}
+\examples{
+mu <- mle$est.min$mu
+Sigma <- mle$est.min$Sigma
+logVarMC(mu, Sigma)
+
 }

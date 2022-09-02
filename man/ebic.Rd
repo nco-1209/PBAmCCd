@@ -12,17 +12,32 @@ ebic(l, n, d, df, gamma)
 \item{n}{Number of rows of the data set for which the log-likelihood has been 
 calculated}
 
-\item{d}{?}
+\item{d}{The size of the (k-1) by (k-1) covariance matrix of a 
+k by k count-compositional data matrix}
 
 \item{df}{Degrees of freedom}
 
-\item{gamma}{?}
+\item{gamma}{A tuning parameter. Larger values means more penalization}
 }
 \value{
 The value of the EBIC.
 }
 \description{
-Calculates the Extende
-d Bayesian Information Criterion (EBIC) of a model.
-Used for model selection.
+Calculates the Extended Bayesian Information Criterion (EBIC) of a model.
+Used for model selection to asses the fit of the multinomial logit-Normal 
+model which includes a graphical lasso penalty.
+}
+\note{
+The graphical lasso penalty 
+is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
+The penalization parameter lambda controls the sparsity of Sigma.
+}
+\examples{
+log.lik_1 <- mle$est[[1]]$log.lik
+n <- NROW(dat.ss)
+k <- NCOL(dat.ss)
+df_1 <- mle$est[[1]]$df
+
+ebic(log.lik_1, n, k, df_1, gamma=0.1)
+
 }

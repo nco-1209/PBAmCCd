@@ -7,16 +7,16 @@
 logLikG(v, S, invSigma)
 }
 \arguments{
-\item{v}{Compositional data set which has been transformed by the additive 
-log ratio}
+\item{v}{Count-compositional dataset which has been transformed by the additive
+logratio}
 
-\item{S}{?}
+\item{S}{Covariance of \code{v}}
 
 \item{invSigma}{Inverse of the Sigma matrix}
 }
 \value{
-The estimated Gaussian log-likelihood under the Multinomial Logit-Normal distribution.
+The estimated Gaussian log-likelihood under the Multinomial logit-Normal distribution.
 }
 \description{
-Calculates the Gaussian log-likelihood.
+Calculates the Gaussian log-likelihood, under the multinomial logit-Normal model.
 }

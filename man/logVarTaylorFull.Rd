@@ -12,9 +12,9 @@ logVarTaylorFull(
 )
 }
 \arguments{
-\item{mu}{The mean vector of the underlying distribution}
+\item{mu}{The mean vector of a dataset following the multinomial logit-Normal model}
 
-\item{Sigma}{The sigma matrix of the underlying distribution}
+\item{Sigma}{The sigma matrix of a dataset following the multinomial logit-Normal model}
 
 \item{transf}{The desired transformation. If \code{transf="alr"} the inverse 
 additive logratio transformation is applied. If \code{transf="clr"} the
@@ -26,7 +26,16 @@ inverse centered logratio transformation is applied.}
 The estimated variance-covariance matrix, \code{logx}.
 }
 \description{
-Function which estimates the variance-covariance of the log of the data, using a 
-Taylor-series approximation. This function differs from \code{Logx Variance} in
-that the resultant matrix includes a reference category.
+Estimates the variance-covariance of the log of the data, using a 
+Taylor-series approximation. This function differs from the function 
+\code{Logx Variance-Covariance} in that the resultant matrix includes a reference category.
+}
+\examples{
+mu <- mle$est.min$mu
+Sigma <- mle$est.min$Sigma
+
+#Second order approximation of the variance-covariance matrix of the log of the data,
+#with an alr transformation. 
+logVarTaylorFull(mu, Sigma, transf="alr", order="second")
+
 }

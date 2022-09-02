@@ -7,16 +7,22 @@
 MCSample(mu, Sigma, K = 1)
 }
 \arguments{
-\item{mu}{Mean matrix of the underlying distribution}
+\item{mu}{Mean vector of a dataset following the multinomial logit-Normal model}
 
-\item{Sigma}{Variance matrix of the underlying distribution}
+\item{Sigma}{Variance matrix a dataset following the multinomial logit-Normal model}
 
 \item{K}{Number of samples to generate}
 }
 \value{
-K samples from the multinomial logit-normal model. The number of features
+\code{K} samples from the multinomial logit-normal model. The number of features
 in the sample is of length(\code{mu})+1.
 }
 \description{
-Generates a Monte Carlo sample based on the multinomial logit-normal model.
+Generates a Monte Carlo sample based on the multinomial logit-Normal model.
+}
+\examples{
+mu <- mle$est.min$mu
+Sigma <- mle$est.min$Sigma
+MCSample(mu, Sigma, K=1)
+
 }

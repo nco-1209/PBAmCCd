@@ -15,14 +15,8 @@ A vector which is the log of the inverse of the data which has been
 transformed by the additive logratio transformation.
 }
 \description{
-Function which takes the logarithm of a vector, after the inverse additive 
-log-ratio transformation has been applied to it.
-}
-\examples{
-vec <- sample(1:250, 9)
-ref <- vec[length(vec)]
-alr.vec <- log(vec[-length(vec)]/ref)
-
-g(alr.vec)
-
+Calculates the log of a vector after applying the
+inverse additive log-ratio transformation to it. The transformation is 
+\code{g(x)=log(alrInx(x))}, where \code{x} is a vector transformed by the 
+additive log-ratio.
 }

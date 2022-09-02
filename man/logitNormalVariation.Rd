@@ -14,7 +14,7 @@ logitNormalVariation(
 \arguments{
 \item{mu}{The mle estimate of the mu matrix}
 
-\item{Sigma}{The mle estimate of the sigma matrix}
+\item{Sigma}{The mle estimate of the Sigma matrix}
 
 \item{type}{Type of variation metric to be calculated: \code{standard}, \code{phi},
 \code{phis} (a symmetrical version of \code{phi}), or \code{rho}}
@@ -26,6 +26,17 @@ estimation}
 An estimation of the variation matrix, \code{V}.
 }
 \description{
-Estimates the empirical variation matrix of count data that follows a multinomial
-logit-Normal distribution.
+Estimates the variation matrix of count-compositional data 
+based on a multinomial logit-Normal distribution. Estimate is performed using 
+only the parameters of the distribution.
+}
+\examples{
+mu.hat <- mle$est.min$mu
+Sigma.hat <- mle$est.min$Sigma
+
+logitNormalVariation(mu.hat, Sigma.hat) #Standard logit-Normal estimates of variance
+logitNormalVariation(mu.hat, Sigma.hat, type="phi", order="second") #Logit-Normal based estimate of phi
+logitNormalVariation(mu.hat, Sigma.hat, type="phis", order="second") #Logit-Normal based estimate of phis
+logitNormalVariation(mu.hat, Sigma.hat, type="rho", order="second") #Logit-Normal based estimate of rho
+
 }

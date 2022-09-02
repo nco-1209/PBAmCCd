@@ -18,7 +18,7 @@ mlePath(
 )
 }
 \arguments{
-\item{y}{Compositional dataset}
+\item{y}{Count-compositional dataset}
 
 \item{max.iter}{Maximum number of iterations}
 
@@ -28,25 +28,47 @@ mlePath(
 
 \item{tol.nr}{Stopping rule for the Newton Raphson algorithm}
 
-\item{lambda.gl}{Vector of penalization parameters lambda, for graphical lasso}
+\item{lambda.gl}{Vector of penalization parameters lambda, for the graphical lasso penalty}
 
 \item{lambda.min.ratio}{Minimum lambda ratio of the maximum lambda, 
 used for the sequence of lambdas}
 
-\item{n.lambda}{Number of lambda to evaluate differnet paths for}
+\item{n.lambda}{Number of lambda to evaluate different paths for}
 
-\item{n.cores}{Number of cores to use for parallel computation}
+\item{n.cores}{Number of cores to use (for parallel computation)}
 
 \item{gamma}{Gamma value for EBIC calculation of the log-likelihood}
 }
 \value{
-The MLE estimates of y for each element lambda of lambda.gl, (\code{est}); 
+The MLE estimates of \code{y} for each element lambda of lambda.gl, (\code{est}); 
 the value of the estimates which produce the minimum EBIC, (\code{est.min}); 
 the vector of lambdas used for graphical lasso, (\code{lambda.gl}); the index of 
 the minimum EBIC (extended Bayesian information criterion), (\code{min.idx}); 
-vector containg the EBIC for each lambda, (\code{ebic}).
+vector containing the EBIC for each lambda, (\code{ebic}).
 }
 \description{
-Calculates the maximum likelihood estimates of the parameters for various 'paths'
-of the penalization parameter \code{lambda}.
+Calculates the maximum likelihood estimates of the parameters for the 
+mutlinomial logit-Normal distribution under various values
+of the penalization parameter \code{lambda}. Parameter \code{lambda} controls
+the sparsity of the covariance matrix \code{Sigma}, and penalizes the false 
+large correlations that may arise in microbiome data when a large
+number of OTU-associations are being measured.
+}
+\note{
+If using parallel computing, consider setting \code{n.cores} to be equal
+to the number of lambdas being evaluated for, \code{n.lambda}.
+
+The graphical lasso penalty 
+is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
+The penalization parameter lambda controls the sparsity of Sigma.
+}
+\examples{
+n <- 100
+mle.sim <- mlePath(dat.ss, tol=1e-4, tol.nr=1e-4, n.lambda = 8, lambda.min.ratio = 0.01, gamma = 0.1, n.cores = 1)
+
+mu.hat <- mle.sim$est.min$mu #optimal mle of mu based on ebic 
+Sigma.hat <- mle.sim$est.min$Sigma #optimal mle of Sigma based on ebic 
+Sigma.hat <- mle.sim$est.min$ebic #minimum ebic 
+
+
 }

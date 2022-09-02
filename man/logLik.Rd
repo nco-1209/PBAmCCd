@@ -7,19 +7,19 @@
 logLik(v, y, ni, S, invSigma)
 }
 \arguments{
-\item{v}{The additive log ratio transform of y}
+\item{v}{The additive logratio transform of y}
 
-\item{y}{Compositional data set}
+\item{y}{Compositional dataset}
 
-\item{ni}{The row sums of y?}
+\item{ni}{The row sums of y}
 
-\item{S}{?}
+\item{S}{Covariance of \code{v}}
 
 \item{invSigma}{The inverse of the Sigma matrix}
 }
 \value{
-The estimated log-likelihood under the Multinomial Logit-Normal distribution.
+The estimated log-likelihood under the Multinomial logit-Normal distribution.
 }
 \description{
-Calculates the log-likelihood.
+Calculates the log-likelihood, under the multinomial logit-Normal model.
 }

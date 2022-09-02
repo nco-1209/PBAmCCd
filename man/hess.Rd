@@ -7,9 +7,9 @@
 hess(v, ni, Sigma.inv)
 }
 \arguments{
-\item{v}{Compositional dataset which has been transformed by the additive log ratio}
+\item{v}{Count-compositional dataset which has been transformed by the additive logratio}
 
-\item{ni}{Row sums of the raw data ?}
+\item{ni}{Row sums of the raw data}
 
 \item{Sigma.inv}{Inverse of the Sigma matrix}
 }

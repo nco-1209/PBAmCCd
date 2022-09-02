@@ -7,9 +7,9 @@
 logVarTaylor(mu, Sigma, transf = c("alr", "clr"), order = c("first", "second"))
 }
 \arguments{
-\item{mu}{The mean vector of the underlying distribution}
+\item{mu}{The mean vector of a dataset following the multinomial logit-Normal model}
 
-\item{Sigma}{The sigma matrix of the underlying distribution}
+\item{Sigma}{The sigma matrix of a dataset following the multinomial logit-Normal model}
 
 \item{transf}{The desired transformation. If \code{transf="alr"} the inverse 
 additive log-ratio transformation is applied. If \code{transf="clr"} the
@@ -21,6 +21,15 @@ inverse centered log-ratio transformation is applied.}
 The estimated variance-covariance matrix, \code{logx}.
 }
 \description{
-Function which estimates the variance-covariance of the log of the data, using a 
-Taylor-series approximation.
+Estimates the variance-covariance of the log of a count-compositional dataset, 
+using a Taylor-series approximation.
+}
+\examples{
+mu <- mle$est.min$mu
+Sigma <- mle$est.min$Sigma
+
+#Second order approximation of the variance-covariance matrix of the log of the data,
+#with an alr transformation. 
+logVarTaylor(mu, Sigma, transf="alr", order="second")
+
 }

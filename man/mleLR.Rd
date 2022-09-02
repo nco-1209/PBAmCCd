@@ -15,7 +15,7 @@ mleLR(
 )
 }
 \arguments{
-\item{y}{Compositional dataset}
+\item{y}{Count-compositional dataset}
 
 \item{max.iter}{Maximum number of iterations}
 
@@ -25,15 +25,38 @@ mleLR(
 
 \item{tol.nr}{Stopping rule for the Newton-Raphson algorithm}
 
-\item{lambda.gl}{Penalization parameter lambda, for the graphical lasso}
+\item{lambda.gl}{Penalization parameter lambda, for the graphical lasso penalty. Controls
+the sparsity of Sigma}
 
 \item{gamma}{Gamma value for EBIC calculation of the log-likelihood}
 }
 \value{
-
+The additive log-ratio of y (\code{v}); maximum likelihood estimates of 
+\code{mu}, \code{Sigma}, and \code{Sigma.inv};
+the log-likelihood (\code{log.lik}); the EBIC (extended Bayesian information criterion) 
+of the log-likelihood of the multinomial logit-Normal model with the 
+graphical lasso penalty (\code{ebic}); degrees of freedom of the \code{Sigma.inv}
+matrix (\code{df}).
 }
 \description{
-Function which returns maximum likelihood estimates of parameters given a compositional
-dataset. The MLE procedure is based on the Multinomial Logit-Normal distribution, 
-using the EM algorithm from Hoff (2003).
+Returns the maximum likelihood estimates of multinomial logit-Normal model 
+parameters given a count-compositional dataset. The MLE procedure is based on the 
+multinomial logit-Normal distribution, using the EM algorithm from Hoff (2003).
+}
+\note{
+The graphical lasso penalty 
+is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
+The penalization parameter lambda controls the sparsity of Sigma.
+
+This function is also used within the \code{mlePath()} function.
+}
+\examples{
+n <- 100
+mle_dat <- mleLR(dat.ss, lambda.gl=0.5)
+
+mle_dat$mu #mle mu of dat.ss
+mle_dat$Sigma #mle Sigma of dat.ss
+mle_dat$ebic #ebic of the fitted model
+
+
 }

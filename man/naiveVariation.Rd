@@ -14,7 +14,7 @@ naiveVariation(
 )
 }
 \arguments{
-\item{counts}{Dataset of compositional data}
+\item{counts}{Count-compositional dataset}
 
 \item{pseudo.count}{Scaler value added to the data matrix to prevent infinite 
 values caused by taking the log of the counts}
@@ -30,12 +30,22 @@ the function again, instead setting the \code{use} parameter to \code{"pairwise.
 \item{set.inf.na}{If \code{TRUE}, sets any infinite values in \code{counts} to \code{NA}}
 
 \item{already.log}{If \code{FALSE}, the counts have not been transformed by 
-by the log. This transformation is of the form is \eqn{log(frac{X_{ij}}{s_{i}})}, where 
+by the log. This transformation is of the form \eqn{log(frac{X_{ij}}{s_{i}})}, where 
 \eqn{s_{i} = \sum{n=1}^{j} X_{in}}, where \eqn{X_{ij}} is element \eqn{counts[i,j]}}
 }
 \value{
 The naive variation matrix, \code{v}.
 }
 \description{
-Estimates the variation matrix of compositional data based strictly on the counts.
+Estimates the variation matrix of count compositional data using the proportions
+of a count compositional dataset.
+}
+\examples{
+n.g <- ncol(dat.ss)
+
+naiveVariation(dat.ss)[-n.g,-n.g] #Standard naive estimate of the variance
+naiveVariation(dat.ss, type="phi")[-n.g,-n.g] #Logit-Normal based naive estimate of phi
+naiveVariation(dat.ss, type="phis")[-n.g,-n.g] #Logit-Normal based naive estimate of phis
+naiveVariation(dat.ss, type="rho")[-n.g,-n.g] #Logit-Normal based naive estimate of rho
+
 }

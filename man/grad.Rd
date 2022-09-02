@@ -7,18 +7,18 @@
 grad(v, y, ni, mu, Sigma.inv)
 }
 \arguments{
-\item{v}{Additive-log ratio (alr) transform of y}
+\item{v}{Additive logratio (alr) transform of y}
 
-\item{y}{Compositional data set}
+\item{y}{Count compositional dataset}
 
-\item{ni}{Row sums of y?}
+\item{ni}{Row sums of y}
 
 \item{mu}{Mu vector of y}
 
 \item{Sigma.inv}{Sigma inverse matrix of y}
 }
 \value{
-The gradient vector of Normal random variables
+The gradient vector of Normal random variables.
 }
 \description{
 Calculates the gradient of the normal random variables, on the logit scale.

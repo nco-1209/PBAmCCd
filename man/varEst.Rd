@@ -6,16 +6,15 @@
 \usage{
 varEst(
   counts,
-  p.model = c("logitNormal", "dirichlet", "plugin"),
+  p.model = c("logitNormal"),
   type = c("standard", "phi", "rho"),
   refColumn = NULL
 )
 }
 \arguments{
-\item{counts}{Dataset of compositional data}
+\item{counts}{count compositional dataset}
 
-\item{p.model}{Probability model for the counts: (\code{logitNormal}, \code{dirichlet},
-or \code{plugin})}
+\item{p.model}{Probability model for the counts, (\code{logitNormal}}
 
 \item{type}{Type of variation metric to be calculated: \code{standard}, 
 \code{phi}, or \code{rho}}
@@ -27,5 +26,14 @@ The estimated variation matrix for the counts. May be a \code{standard},
 \code{phi}, or \code{rho} variation matrix depending on \code{type} specified.
 }
 \description{
-Estimates the variation matrix of compositional count data.
+Estimates the variation matrix of compositional count data, based on the 
+multinomial logit-Normal model.
+}
+\examples{
+mu <- mle$est.min$mu
+Sigma <- mle$est.min$Sigma
+
+varEst(dat.ss, p.model="logitNormal", type="standard", refColumn=ncol(dat.ss))
+
+
 }

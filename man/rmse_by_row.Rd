@@ -22,6 +22,6 @@ Calculates the root mean square error (RMSE) between each row of two matrices.
 x <- matrix(sample(1:500, size = 21), nrow=3)
 y <- matrix(sample(1:500, size = 21), nrow=3)
 
-rmse(x,y)
+rmse_by_row(x,y)
 
 }

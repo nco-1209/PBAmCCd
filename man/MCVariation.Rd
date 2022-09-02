@@ -13,9 +13,9 @@ MCVariation(
 )
 }
 \arguments{
-\item{mu}{The mean matrix of the underlying distribution}
+\item{mu}{The mean vector of a dataset following the multinomial logit-Normal model}
 
-\item{Sigma}{The variance matrix of the underlying distribution}
+\item{Sigma}{The variance matrix of a dataset following the multinomial logit-Normal model}
 
 \item{x}{A sample from the multinomial logit-Normal model. If \code{mu=NULL} 
 and \code{Sigma=NULL}, then x must be provided}
@@ -29,5 +29,15 @@ and \code{Sigma=NULL}, then x must be provided}
 The variance matrix, \code{v}.
 }
 \description{
-Calculates the variation matrix using Monte Carlo integration.
+Estimates the "true" values of the variation matrix for count-compositional 
+data based on the multinomial logit-Normal model, using large-sample Monte-Carlo methods.
+}
+\examples{
+mu <- mle$est.min$mu
+Sigma <- mle$est.min$Sigma
+
+MCVariation(mu, Sigma, type="standard") #Monte Carlo estimate of the standard variation, using mu and Sigma    
+MCVariation(x=dat.ss, type="standard")   #Monte Carlo estimate of the standard variation, using x
+
+
 }
