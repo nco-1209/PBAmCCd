@@ -16,7 +16,7 @@ globalVariables(c("n", "mu", "Sigma", "J"))
 #' @param gamma Gamma value for EBIC calculation of the log-likelihood
 #'
 #' @return The additive log-ratio of y (\code{v}); maximum likelihood estimates of 
-#' \code{mu}, \code{Sigma}, and \code{Sigma.inv;
+#' \code{mu}, \code{Sigma}, and \code{Sigma.inv};
 #' the log-likelihood (\code{log.lik}); the EBIC (extended Bayesian information criterion) 
 #' of the log-likelihood of the multinomial logit-Normal model with the 
 #' graphical lasso penalty (\code{ebic}); degrees of freedom of the \code{Sigma.inv}
@@ -29,8 +29,8 @@ globalVariables(c("n", "mu", "Sigma", "J"))
 #' @note This function is also used within the \code{mlePath()} function.
 #' 
 #' @examples
-#' data(mle_results_p100)
-#' mle_dat <- mleL(dat.ss)
+#' n <- 100
+#' mle_dat <- mleLR(dat.ss, lambda.gl=0.5)
 #' 
 #' mle_dat$mu #mle mu of dat.ss
 #' mle_dat$Sigma #mle Sigma of dat.ss
@@ -178,10 +178,9 @@ wrapMLE <- function(x) {
 #' is the sum of the absolute value of the elements of the covariance matrix \code{Sigma}.
 #' The penalization parameter lambda controls the sparsity of Sigma. 
 #' 
-#' @examples 
-#' data(mle_results_p100)
-#' mle.sim <- mlePath(dat.ss tol=1e-4, tol.nr=1e-4, n.lambda = n.lam, lambda.min.ratio = lmr, 
-#' gamma = 0.1)
+#' @examples
+#' n <- 100
+#' mle.sim <- mlePath(dat.ss, tol=1e-4, tol.nr=1e-4, n.lambda = 8, lambda.min.ratio = 0.01, gamma = 0.1, n.cores = 1)
 #' 
 #' mu.hat <- mle.sim$est.min$mu #optimal mle of mu based on ebic 
 #' Sigma.hat <- mle.sim$est.min$Sigma #optimal mle of Sigma based on ebic 
@@ -327,8 +326,6 @@ logLik <- function(v, y, ni, S, invSigma) {
 #' The penalization parameter lambda controls the sparsity of Sigma. 
 #' 
 #' @examples 
-#' data(mle_results_p100)
-#' 
 #' log.lik_1 <- mle$est[[1]]$log.lik
 #' n <- NROW(dat.ss)
 #' k <- NCOL(dat.ss)
@@ -353,11 +350,10 @@ ebic <- function(l, n, d, df, gamma) {
 #' @return Plot of the EBIC (y-axis) against each lambda (x-axis).
 #'
 #' @examples 
-#' data(mle_results_p100)
-#' mle.sim <- mlePath(dat.ss tol=1e-4, tol.nr=1e-4, n.lambda = n.lam, lambda.min.ratio = lmr, 
-#' gamma = 0.1)
+#' mle$ebic #y-axis of ebic plot
+#' log(mle$lambda.gl) #x-axis of ebic plot
 #' 
-#' ebicPlot(mle.sim, xlog = TRUE)
+#' ebicPlot(mle, xlog = TRUE) 
 #'
 #' @export
 #' 
