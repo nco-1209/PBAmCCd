@@ -14,8 +14,11 @@
 #' \code{phi}, or \code{rho} variation matrix depending on \code{type} specified. 
 #' 
 #' @examples 
-#' data(mle_results_p100)
-#' varEst(dat.ss, p.model="logitNormal", type="standard")
+#' mu <- mle$est.min$mu
+#' Sigma <- mle$est.min$Sigma
+#' 
+#' varEst(dat.ss, p.model="logitNormal", type="standard", refColumn=ncol(dat.ss))
+#' 
 #' 
 #' @export
 #'
@@ -51,7 +54,6 @@ varEst <- function(counts, p.model=c("logitNormal"), type=c("standard","phi","rh
 #' @return An estimation of the variation matrix, \code{V}.
 #'
 #' @examples 
-#' data(mle_results_p100)
 #' mu.hat <- mle$est.min$mu
 #' Sigma.hat <- mle$est.min$Sigma
 #' 
@@ -112,8 +114,7 @@ logitNormalVariation <- function(mu, Sigma, type=c("standard","phi", "phis","rho
 #' @return The naive variation matrix, \code{v}.
 #' 
 #' @examples 
-#' data(mle_results_p100)
-#' n.g <- n.col(dat.ss)
+#' n.g <- ncol(dat.ss)
 #' 
 #' naiveVariation(dat.ss)[-n.g,-n.g] #Standard naive estimate of the variance
 #' naiveVariation(dat.ss, type="phi")[-n.g,-n.g] #Logit-Normal based naive estimate of phi
@@ -171,7 +172,6 @@ naiveVariation <- function(counts, pseudo.count=0, type=c("standard","phi", "phi
 #' in the sample is of length(\code{mu})+1.
 #'
 #' @examples 
-#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' MCSample(mu, Sigma, K=1)
@@ -200,15 +200,11 @@ MCSample <- function(mu, Sigma, K=1) {
 #' @return The variance matrix, \code{v}.
 #' 
 #' @examples
-#' data(mle_results_p100)
-#' 
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' 
-#' MCVariation(mu, Sigma, type=standard) #Monte Carlo estimate of the standard variation, 
-#'                                       #using mu and Sigma    
-#' MCVariation(x=dat.ss type=standard)   #Monte Carlo estimate of the standard variation, 
-#'                                       #using x
+#' MCVariation(mu, Sigma, type="standard") #Monte Carlo estimate of the standard variation, using mu and Sigma    
+#' MCVariation(x=dat.ss, type="standard")   #Monte Carlo estimate of the standard variation, using x
 #' 
 #' 
 #' @export
@@ -262,14 +258,6 @@ MCVariation <- function(mu=NULL, Sigma=NULL, x=NULL, K=1e6,
 #' @return A vector which is the log of the inverse of the data which has been
 #' transformed by the additive logratio transformation. 
 #' 
-#' @example 
-#' data(mle_results_p100)
-#' col1 <- dat.ss[,1]
-#' alr_col1 <- compositions::alr(col1)
-#' 
-#' g(alr_col1)
-#' 
-#' 
 #'
 g <- function(x) {
   ls <- log(1+sum(exp(x)))
@@ -292,7 +280,6 @@ g <- function(x) {
 #' @return The estimated variance-covariance matrix, \code{logx}. 
 #' 
 #' @examples 
-#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' 
@@ -336,7 +323,6 @@ logVarTaylor <- function(mu, Sigma, transf=c("alr", "clr"), order=c("first","sec
 #' @return The estimated variance-covariance matrix, \code{logx}
 #'
 #' @examples 
-#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' logVarMC(mu, Sigma)
@@ -367,7 +353,6 @@ logVarMC <- function(mu, Sigma, K=100000) {
 #' @return The estimated variance-covariance matrix, \code{logx}.
 #' 
 #' @examples 
-#' data(mle_results_p100)
 #' mu <- mle$est.min$mu
 #' Sigma <- mle$est.min$Sigma
 #' 
